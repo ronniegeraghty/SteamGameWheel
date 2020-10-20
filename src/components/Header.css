@@ -1,0 +1,16 @@
+.HeaderInComp {
+  display: flex;
+  justify-content: center;
+}
+.InputSection {
+  display: inline;
+  margin: 5% auto;
+}
+.UserNameTextInput {
+  background: rgba(0, 0, 0, 0);
+  border-style: none none solid none;
+  margin: auto 1%;
+}
+.UserSearchButton {
+  margin: auto 1%;
+}

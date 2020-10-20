@@ -1,0 +1,10 @@
+.App {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-areas: "input-area";
+}
+.Header {
+  grid-area: input-area;
+  background-color: #f5a25d;
+}
