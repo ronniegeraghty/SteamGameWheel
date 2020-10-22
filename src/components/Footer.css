@@ -1,0 +1,16 @@
+.FooterInComp {
+  display: grid;
+  grid-template-areas: "Author FooterTitle Version";
+}
+.Author {
+  grid-area: Author;
+  justify-self: left;
+}
+.FooterTitle {
+  grid-area: FooterTitle;
+  justify-self: center;
+}
+.Version {
+  grid-area: Version;
+  justify-self: right;
+}

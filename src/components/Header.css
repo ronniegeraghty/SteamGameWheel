@@ -1,16 +1,24 @@
 .HeaderInComp {
-  display: flex;
   justify-content: center;
 }
-.InputSection {
-  display: inline;
-  margin: 5% auto;
+.Title {
+  text-align: center;
 }
-.UserNameTextInput {
-  background: rgba(0, 0, 0, 0);
-  border-style: none none solid none;
-  margin: auto 1%;
+.LoginForm {
+  justify-content: center;
+  text-align: center;
+  display: grid;
+  grid-template-areas:
+    "UsernameInput UsernameInput . LoginButton"
+    "PasswordInput PasswordInput . . ";
+  grid-gap: 0 1rem;
 }
-.UserSearchButton {
-  margin: auto 1%;
+.UsernameInput {
+  grid-area: UsernameInput;
+}
+.PasswordInput {
+  grid-area: PasswordInput;
+}
+.LoginButton {
+  grid-area: LoginButton;
 }

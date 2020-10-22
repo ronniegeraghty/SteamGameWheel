@@ -2,9 +2,23 @@
   width: 100vw;
   height: 100vh;
   display: grid;
-  grid-template-areas: "input-area";
+  grid-template-areas:
+    "Header"
+    "SpinWheel"
+    "SpinWheel"
+    "SpinWheel"
+    "SpinWheel"
+    "Footer";
 }
 .Header {
-  grid-area: input-area;
+  grid-area: Header;
   background-color: #f5a25d;
+}
+.SpinWheel {
+  grid-area: SpinWheel;
+  background-color: #fa7f72;
+}
+.Footer {
+  grid-area: Footer;
+  background-color: #389393;
 }
