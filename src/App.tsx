@@ -7,8 +7,8 @@ import { Login } from "./functions/SteamLogin";
 import { State } from "./types/State";
 function App() {
   const [state, setstate] = useState<State>({});
-  const loginCB = (urnm: string, pswd: string): void =>
-    setstate(Login(urnm, pswd));
+  const loginCB = (username: string, password: string): void =>
+    setstate(Login(username, password));
   return (
     <div className="App">
       <div className="Header">
