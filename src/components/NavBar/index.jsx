@@ -12,7 +12,7 @@ const NavBar = () => {
       </div>
       <nav className="navbar navbar-expand-sm navbar-light border-bottom justify-content-between">
         <Link className="navbar-brand" to="/" role="heading" aria-level="1">
-          steam_game_whell
+          steam_game_wheel
         </Link>
         <div className="navbar-nav">
           <Link className="nav-item nav-link active" to="/">
