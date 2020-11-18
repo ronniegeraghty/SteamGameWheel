@@ -7,9 +7,9 @@ const Footer = () => {
       <div className="container-fluid">
         <div className="row">
           <div className="col-12 col-md-5">
-            <h5 className={styles.title}>Template_Project</h5>
+            <h5 className={styles.title}>Steam Game Wheel</h5>
             <p className={styles.description}>
-              This is placeholder text. Your web app description goes here.
+              Randomly pick a Steam Game to play.
             </p>
           </div>
           <div className="col-2">
@@ -22,7 +22,7 @@ const Footer = () => {
               <li>
                 <a
                   className={styles.footerlink}
-                  href="https://github.com/ronniegeraghty/Template-Project"
+                  href="https://github.com/ronniegeraghty/SteamGameWheel"
                 >
                   GitHub
                 </a>

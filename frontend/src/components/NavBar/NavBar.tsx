@@ -12,17 +12,11 @@ const NavBar = () => {
       </div>
       <nav className="navbar navbar-expand-sm navbar-light border-bottom justify-content-between">
         <Link className="navbar-brand" to="/">
-          Template_Project
+          Steam Game Wheel
         </Link>
         <div className="navbar-nav">
           <Link className="nav-item nav-link active" to="/">
-            Master_Detail
-          </Link>
-          <Link className="nav-item nav-link active" to="sample-list">
-            List
-          </Link>
-          <Link className="nav-item nav-link active" to="blank">
-            Blank
+            Steam Game Wheel
           </Link>
         </div>
       </nav>
