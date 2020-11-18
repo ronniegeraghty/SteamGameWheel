@@ -8,6 +8,8 @@
     "start-server": "node .",
     "dev-server": "concurrently \"tsc -w\" \"nodemon .\"",
     "build-frontend": "rm -R build/frontend && cd frontend && npm run build",
+    "start-frontend": "cd frontend && npm run start",
+    "dev": "concurrently \"tsc -w\" \"nodemon .\" \"npm run start-frontend\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
