@@ -1,7 +1,7 @@
 {
   "name": "steam-game-wheel",
   "version": "0.0.0",
-  "description": "A web app that randomly choose a game from a Steam Users game library for them to play. ",
+  "description": "A web app that pick a random game from a Steam User's game library for them to play. ",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
