@@ -1,0 +1,39 @@
+{
+  "name": "steam-game-wheel",
+  "version": "0.0.0",
+  "description": "A web app that pick a random game from a Steam User's game library for them to play. ",
+  "main": "./build/index.js",
+  "scripts": {
+    "build-server": "tsc",
+    "start-server": "node .",
+    "dev-server": "concurrently \"tsc -w\" \"nodemon .\"",
+    "build-frontend": "rm -R build/frontend && cd frontend && npm run build",
+    "start-frontend": "cd frontend && npm run start",
+    "dev": "concurrently \"tsc -w\" \"nodemon .\" \"npm run start-frontend\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ronniegeraghty/SteamGameWheel.git"
+  },
+  "author": "Ronnie Geraghty",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ronniegeraghty/SteamGameWheel/issues"
+  },
+  "homepage": "https://github.com/ronniegeraghty/SteamGameWheel#readme",
+  "dependencies": {
+    "bootstrap": "^4.5.3",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.2",
+    "@types/express": "^4.17.9",
+    "@types/morgan": "^1.9.2",
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.6"
+  }
+}
