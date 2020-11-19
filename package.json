@@ -4,12 +4,14 @@
   "description": "A web app that pick a random game from a Steam User's game library for them to play. ",
   "main": "./build/Server.js",
   "scripts": {
-    "build-server": "tsc",
+    "build-server": "node buildScript.js server",
     "start-server": "node .",
     "dev-server": "concurrently \"tsc -w\" \"nodemon .\"",
     "dev-server1": "ts-node ./server/Server.ts",
-    "build-frontend": "rm -R build/frontend && cd frontend && npm run build",
+    "build-frontend": "node buildScript.js frontend",
     "start-frontend": "cd frontend && npm run start",
+    "build": "node buildScript.js full",
+    "clear-build": "node buildScript.js clear",
     "dev": "concurrently \"tsc -w\" \"nodemon .\" \"npm run start-frontend\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
