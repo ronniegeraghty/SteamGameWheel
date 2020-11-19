@@ -1,6 +1,8 @@
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import express from "express";
+import express, { Request, Response } from "express";
+import logger from "morgan";
+import path from "path";
 import Controller from "./interfaces/controller.interface";
 import errorMiddleware from "./middleware/error.middleware";
 
@@ -12,6 +14,7 @@ class App {
 
     this.initializeMiddlewares();
     this.initializeControllers(controllers);
+    this.initializeFrontend();
     this.initializeErrorHandling();
   }
 
@@ -26,8 +29,17 @@ class App {
   }
 
   public initializeMiddlewares() {
+    this.app.use(logger("dev"));
     this.app.use(bodyParser.json());
+    this.app.use(bodyParser.urlencoded({ extended: false }));
     this.app.use(cookieParser());
+  }
+
+  public initializeFrontend() {
+    this.app.use(express.static(path.resolve(__dirname, "frontend")));
+    this.app.get("*", (req: Request, res: Response) => {
+      res.sendFile("frontend/index.html", { root: __dirname });
+    });
   }
 
   public initializeErrorHandling() {
