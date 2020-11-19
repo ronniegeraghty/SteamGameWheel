@@ -2,7 +2,7 @@
   "name": "steam-game-wheel",
   "version": "0.0.0",
   "description": "A web app that pick a random game from a Steam User's game library for them to play. ",
-  "main": "./build/Server.js",
+  "main": "./build/server.js",
   "scripts": {
     "build-server": "node buildScript.js server",
     "start-server": "node .",
@@ -12,6 +12,7 @@
     "start-frontend": "cd frontend && npm run start",
     "build": "node buildScript.js full",
     "clear-build": "node buildScript.js clear",
+    "new-build": "npm run clear-build && npm run build",
     "dev": "concurrently \"tsc -w\" \"nodemon .\" \"npm run start-frontend\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -28,6 +29,7 @@
   "dependencies": {
     "bootstrap": "^4.5.3",
     "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "http-errors": "^1.8.0",
     "morgan": "^1.10.0",
