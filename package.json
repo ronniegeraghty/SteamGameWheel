@@ -27,13 +27,15 @@
   },
   "homepage": "https://github.com/ronniegeraghty/SteamGameWheel#readme",
   "dependencies": {
+    "@types/request": "^2.48.5",
     "bootstrap": "^4.5.3",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "http-errors": "^1.8.0",
     "morgan": "^1.10.0",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.2",
