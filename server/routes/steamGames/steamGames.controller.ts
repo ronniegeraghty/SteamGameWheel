@@ -1,6 +1,9 @@
 import Controller from "../../interfaces/controller.interface";
 import { Request, Response, Router } from "express";
-import { getGames } from "./getGames";
+import { getSteamID } from "./getSteamID";
+import { getSteamGames } from "././getSteamGames";
+import { getSteamUserSummary } from "./getSteamUserSummary";
+import { getSteamGameDetails } from "./getSteamGameDetails";
 
 class SteamGames implements Controller {
   public path = "/steam-games";
@@ -16,8 +19,16 @@ class SteamGames implements Controller {
 
   private getUserGames = async (request: Request, response: Response) => {
     const userName = request.params.username;
-    const games = getGames(userName);
-    response.json({ games: games, userName: userName });
+    const steamID = await getSteamID(userName);
+    const steamUserSummary = await getSteamUserSummary(steamID);
+    const { gameCount, steamGames } = await getSteamGames(steamID);
+    let games = await getSteamGameDetails(steamGames);
+    //const games = getGames(userName);
+    response.json({
+      steamUserSummary: steamUserSummary,
+      gameCount: gameCount,
+      games: games,
+    });
   };
 }
 
