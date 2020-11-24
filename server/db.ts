@@ -1,6 +1,7 @@
-import { createConnection, Connection } from "typeorm";
+import { createConnection, Connection, ConnectionManager } from "typeorm";
 import { EventEmitter } from "events";
 import { InternalServerError } from "./errors";
+import { SteamGameLibrary } from "./entities/SteamGameLibrary";
 
 const Events = {
   Connected: "onconnected",
@@ -9,15 +10,18 @@ const Events = {
 
 let eventManager: EventEmitter = new EventEmitter();
 let m_Connection: Connection | null = null;
-
+const connectionManager: ConnectionManager = new ConnectionManager();
+//
 (async function () {
   try {
-    m_Connection = await createConnection({
-      name: dbName,
+    m_Connection = connectionManager.create({
+      name: process.env.DB_NAME,
       type: "sqlite",
-      database: "./db.sqlite",
-      entities: [],
+      database: "./sgw.sqlite",
+      entities: [SteamGameLibrary],
     });
+    await m_Connection.connect();
+    await m_Connection.synchronize();
     eventManager.emit(Events.Connected, m_Connection);
   } catch (err) {
     throw err;

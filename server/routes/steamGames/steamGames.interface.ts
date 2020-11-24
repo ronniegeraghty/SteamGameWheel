@@ -14,5 +14,5 @@ export interface UserGameDetails {
 export interface SteamGameDetails {
   appid: number;
   name: string;
-  image: URL;
+  image: string;
 }

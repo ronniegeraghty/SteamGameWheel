@@ -6,3 +6,4 @@ build
 
 # environment
 .env
+sgw.sqlite

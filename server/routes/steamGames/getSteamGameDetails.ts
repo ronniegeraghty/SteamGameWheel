@@ -20,7 +20,15 @@ export const getMultiSteamGameDetails = (
   });
 };
 
-export const getSteamGameDetails = (game: UserGameDetails): Promise<object> => {
+export const getSteamGameDetails = (
+  game: UserGameDetails
+): Promise<{
+  sent_appid: number;
+  playtime: number;
+  appid: number;
+  name: string;
+  image: string;
+}> => {
   const host: string = `https://store.steampowered.com`;
   const path: string = `/api/appdetails`;
   const url: string = host + path + `?appids=${game.appid}`;

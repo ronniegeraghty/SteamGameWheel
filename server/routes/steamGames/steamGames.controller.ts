@@ -7,6 +7,7 @@ import {
   getMultiSteamGameDetails,
   getSteamGameDetails,
 } from "./getSteamGameDetails";
+import { updateSteamGameLibrary } from "./updateSteamGameLibrary";
 
 class SteamGames implements Controller {
   public path = "/steam-games";
@@ -26,6 +27,11 @@ class SteamGames implements Controller {
     const steamUserSummary = await getSteamUserSummary(steamID);
     const { gameCount, steamGames } = await getSteamGames(steamID);
     let games = await getSteamGameDetails(steamGames[0]);
+    updateSteamGameLibrary({
+      appid: games.appid,
+      name: games.name,
+      image: games.image,
+    });
     response.json({
       steamUserSummary: steamUserSummary,
       gameCount: gameCount,
