@@ -1,5 +1,5 @@
 import https from "https";
-import SteamUsersGames from "./steamUsersGames.interface";
+import { SteamUsersGames } from "./steamGames.interface";
 export const getSteamGames = (steamID: string): Promise<SteamUsersGames> => {
   const host: string = `https://api.steampowered.com`;
   const path: string = `/IPlayerService/GetOwnedGames/v1/`;

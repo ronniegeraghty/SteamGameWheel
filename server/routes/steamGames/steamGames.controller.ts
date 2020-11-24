@@ -3,7 +3,10 @@ import { Request, Response, Router } from "express";
 import { getSteamID } from "./getSteamID";
 import { getSteamGames } from "././getSteamGames";
 import { getSteamUserSummary } from "./getSteamUserSummary";
-import { getSteamGameDetails } from "./getSteamGameDetails";
+import {
+  getMultiSteamGameDetails,
+  getSteamGameDetails,
+} from "./getSteamGameDetails";
 
 class SteamGames implements Controller {
   public path = "/steam-games";
@@ -22,12 +25,12 @@ class SteamGames implements Controller {
     const steamID = await getSteamID(userName);
     const steamUserSummary = await getSteamUserSummary(steamID);
     const { gameCount, steamGames } = await getSteamGames(steamID);
-    let games = await getSteamGameDetails(steamGames);
-    //const games = getGames(userName);
+    let games = await getSteamGameDetails(steamGames[0]);
     response.json({
       steamUserSummary: steamUserSummary,
       gameCount: gameCount,
       games: games,
+      steamGames: steamGames,
     });
   };
 }
