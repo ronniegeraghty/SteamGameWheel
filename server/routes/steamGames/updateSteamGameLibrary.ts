@@ -1,4 +1,3 @@
-import { getRepository } from "typeorm";
 import { SteamGameLibrary } from "../../entities/SteamGameLibrary";
 import { SteamGameDetails } from "./steamGames.interface";
 import db from "../../db";

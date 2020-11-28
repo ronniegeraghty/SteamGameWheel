@@ -1,26 +1,52 @@
 import https from "https";
+import db from "../../db";
+import { SteamGameLibrary } from "../../entities/SteamGameLibrary";
 import { UserGameDetails } from "./steamGames.interface";
 
-export const getMultiSteamGameDetails = (
-  games: UserGameDetails[]
-): Promise<object[]> => {
-  return new Promise((resolve, reject) => {
-    let gameDetails: Promise<object>[] = [];
-    let newGames = games.slice(0, 50);
-    console.log(`NEWGAMES_LENGTH: ${newGames.length}`);
-    newGames.forEach((game: UserGameDetails) => {
-      console.log(`FOREACH\tAPPID: ${game.appid}`);
-      gameDetails.push(getSteamGameDetails(game));
-    });
+// export const getMultiSteamGameDetails = (
+//   games: UserGameDetails[]
+// ): Promise<object[]> => {
+//   return new Promise((resolve, reject) => {
+//     let gameDetails: Promise<object>[] = [];
+//     let newGames = games.slice(0, 50);
+//     console.log(`NEWGAMES_LENGTH: ${newGames.length}`);
+//     newGames.forEach((game: UserGameDetails) => {
+//       console.log(`FOREACH\tAPPID: ${game.appid}`);
+//       gameDetails.push(getSteamGameDetails(game));
+//     });
 
-    Promise.all(gameDetails).then((details) => {
-      console.log(`DETAILS: ${JSON.stringify(details)}`);
-      resolve(details);
-    });
-  });
+//     Promise.all(gameDetails).then((details) => {
+//       console.log(`DETAILS: ${JSON.stringify(details)}`);
+//       resolve(details);
+//     });
+//   });
+// };
+
+export const getSteamGameDetailsDB = async (
+  game: UserGameDetails
+): Promise<null | {
+  sent_appid: number;
+  playtime: number;
+  appid: number;
+  name: string;
+  image: string;
+}> => {
+  const sglRepo = db.connection.getRepository(SteamGameLibrary);
+  const gameDetails = await sglRepo.findOne(game.appid);
+  if (gameDetails) {
+    return {
+      sent_appid: game.appid,
+      playtime: game.playtime_forever,
+      appid: gameDetails.appid,
+      name: gameDetails.name,
+      image: gameDetails.image,
+    };
+  } else {
+    return null;
+  }
 };
 
-export const getSteamGameDetails = (
+export const getSteamGameDetailsAPI = (
   game: UserGameDetails
 ): Promise<{
   sent_appid: number;
@@ -35,7 +61,7 @@ export const getSteamGameDetails = (
 
   return new Promise((resolve, reject) => {
     https
-      .get(url, (response) => {
+      .get(url, response => {
         let { statusCode } = response;
         let contentType = response.headers["content-type"];
 
@@ -64,7 +90,7 @@ export const getSteamGameDetails = (
         response.setEncoding("utf8");
         let data = "";
 
-        response.on("data", (chunk) => {
+        response.on("data", chunk => {
           data += chunk;
         });
 
@@ -86,7 +112,7 @@ export const getSteamGameDetails = (
           }
         });
       })
-      .on("error", (e) => {
+      .on("error", e => {
         reject(`Got error: ${e.message}`);
       });
   });

@@ -4,8 +4,8 @@ import { getSteamID } from "./getSteamID";
 import { getSteamGames } from "././getSteamGames";
 import { getSteamUserSummary } from "./getSteamUserSummary";
 import {
-  getMultiSteamGameDetails,
-  getSteamGameDetails,
+  getSteamGameDetailsAPI,
+  getSteamGameDetailsDB,
 } from "./getSteamGameDetails";
 import { updateSteamGameLibrary } from "./updateSteamGameLibrary";
 
@@ -26,12 +26,16 @@ class SteamGames implements Controller {
     const steamID = await getSteamID(userName);
     const steamUserSummary = await getSteamUserSummary(steamID);
     const { gameCount, steamGames } = await getSteamGames(steamID);
-    let games = await getSteamGameDetails(steamGames[0]);
-    updateSteamGameLibrary({
-      appid: games.appid,
-      name: games.name,
-      image: games.image,
-    });
+    let games = await getSteamGameDetailsDB(steamGames[10]);
+    if (!games) {
+      games = await getSteamGameDetailsAPI(steamGames[10]);
+      updateSteamGameLibrary({
+        appid: games.appid,
+        name: games.name,
+        image: games.image,
+      });
+    }
+
     response.json({
       steamUserSummary: steamUserSummary,
       gameCount: gameCount,
