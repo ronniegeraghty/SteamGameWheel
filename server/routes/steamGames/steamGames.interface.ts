@@ -16,3 +16,12 @@ export interface SteamGameDetails {
   name: string;
   image: string;
 }
+
+export interface SteamUserInfo {
+  steamid: string;
+  personaname: string;
+  profileurl: string;
+  avatar: string;
+  avatarmedium: string;
+  avatarfull: string;
+}

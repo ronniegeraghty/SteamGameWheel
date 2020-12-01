@@ -1,7 +1,40 @@
 import https from "https";
+import fetch from "node-fetch";
 import db from "../../db";
 import { SteamGameLibrary } from "../../entities/SteamGameLibrary";
 import { UserGameDetails } from "./steamGames.interface";
+
+export const getSteamGameDetails = (appid: number) => {
+  console.log(`APPID: ${appid}`);
+  const host: string = `https://store.steampowered.com`;
+  const path: string = `/api/appdetails`;
+  const url: string = host + path + `?appids=${appid}`;
+  return fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`${response.status} - ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then((json) => {
+      const gameDetails = json;
+      if (!gameDetails[appid].success) {
+        return {
+          success: gameDetails[appid].success,
+          gameDetails: gameDetails,
+        };
+      }
+      const gameData = gameDetails[appid].data;
+      return {
+        success: gameDetails[appid].success,
+        gameDetails: {
+          appid: gameData.steam_appid,
+          name: gameData.name,
+          image: gameData.header_image,
+        },
+      };
+    });
+};
 
 // export const getMultiSteamGameDetails = (
 //   games: UserGameDetails[]
@@ -22,11 +55,9 @@ import { UserGameDetails } from "./steamGames.interface";
 //   });
 // };
 
-export const getSteamGameDetailsDB = async (
-  game: UserGameDetails
-): Promise<null | {
-  sent_appid: number;
-  playtime: number;
+export const SteamGameDetailsDB = async (game: {
+  appid: number;
+}): Promise<null | {
   appid: number;
   name: string;
   image: string;
@@ -35,8 +66,6 @@ export const getSteamGameDetailsDB = async (
   const gameDetails = await sglRepo.findOne(game.appid);
   if (gameDetails) {
     return {
-      sent_appid: game.appid,
-      playtime: game.playtime_forever,
       appid: gameDetails.appid,
       name: gameDetails.name,
       image: gameDetails.image,
@@ -61,7 +90,7 @@ export const getSteamGameDetailsAPI = (
 
   return new Promise((resolve, reject) => {
     https
-      .get(url, response => {
+      .get(url, (response) => {
         let { statusCode } = response;
         let contentType = response.headers["content-type"];
 
@@ -90,7 +119,7 @@ export const getSteamGameDetailsAPI = (
         response.setEncoding("utf8");
         let data = "";
 
-        response.on("data", chunk => {
+        response.on("data", (chunk) => {
           data += chunk;
         });
 
@@ -112,7 +141,7 @@ export const getSteamGameDetailsAPI = (
           }
         });
       })
-      .on("error", e => {
+      .on("error", (e) => {
         reject(`Got error: ${e.message}`);
       });
   });

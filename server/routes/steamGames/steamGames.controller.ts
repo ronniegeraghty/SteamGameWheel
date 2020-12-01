@@ -1,12 +1,7 @@
 import Controller from "../../interfaces/controller.interface";
 import { Request, Response, Router } from "express";
 import { getSteamID } from "./getSteamID";
-import { getSteamGames } from "././getSteamGames";
-import { getSteamUserSummary } from "./getSteamUserSummary";
-import {
-  getSteamGameDetailsAPI,
-  getSteamGameDetailsDB,
-} from "./getSteamGameDetails";
+import { SteamUserSummary } from "./SteamUserSummary";
 import { updateSteamGameLibrary } from "./updateSteamGameLibrary";
 
 class SteamGames implements Controller {
@@ -18,30 +13,21 @@ class SteamGames implements Controller {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}/:username`, this.getUserGames);
+    this.router
+      .get(`${this.path}/:username`, this.getUserGames)
+      .get(`${this.path}`, this.getAllGames);
   }
 
   private getUserGames = async (request: Request, response: Response) => {
     const userName = request.params.username;
     const steamID = await getSteamID(userName);
-    const steamUserSummary = await getSteamUserSummary(steamID);
-    const { gameCount, steamGames } = await getSteamGames(steamID);
-    let games = await getSteamGameDetailsDB(steamGames[10]);
-    if (!games) {
-      games = await getSteamGameDetailsAPI(steamGames[10]);
-      updateSteamGameLibrary({
-        appid: games.appid,
-        name: games.name,
-        image: games.image,
-      });
-    }
+    const steamUserSummary = await SteamUserSummary(steamID);
+    response.json(steamUserSummary);
+  };
 
-    response.json({
-      steamUserSummary: steamUserSummary,
-      gameCount: gameCount,
-      games: games,
-      steamGames: steamGames,
-    });
+  private getAllGames = async (request: Request, response: Response) => {
+    const status = await updateSteamGameLibrary();
+    response.json(status);
   };
 }
 
