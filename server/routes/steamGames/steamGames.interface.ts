@@ -14,5 +14,14 @@ export interface UserGameDetails {
 export interface SteamGameDetails {
   appid: number;
   name: string;
-  image: URL;
+  image: string;
+}
+
+export interface SteamUserInfo {
+  steamid: string;
+  personaname: string;
+  profileurl: string;
+  avatar: string;
+  avatarmedium: string;
+  avatarfull: string;
 }

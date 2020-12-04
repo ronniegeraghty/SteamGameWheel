@@ -1,12 +1,7 @@
 import Controller from "../../interfaces/controller.interface";
 import { Request, Response, Router } from "express";
 import { getSteamID } from "./getSteamID";
-import { getSteamGames } from "././getSteamGames";
-import { getSteamUserSummary } from "./getSteamUserSummary";
-import {
-  getMultiSteamGameDetails,
-  getSteamGameDetails,
-} from "./getSteamGameDetails";
+import { SteamUserSummary } from "./SteamUserSummary";
 
 class SteamGames implements Controller {
   public path = "/steam-games";
@@ -17,21 +12,14 @@ class SteamGames implements Controller {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}/:username`, this.getUserGames);
+    this.router.get(`${this.path}/:username`, this.getUserSummary);
   }
 
-  private getUserGames = async (request: Request, response: Response) => {
+  private getUserSummary = async (request: Request, response: Response) => {
     const userName = request.params.username;
     const steamID = await getSteamID(userName);
-    const steamUserSummary = await getSteamUserSummary(steamID);
-    const { gameCount, steamGames } = await getSteamGames(steamID);
-    let games = await getSteamGameDetails(steamGames[0]);
-    response.json({
-      steamUserSummary: steamUserSummary,
-      gameCount: gameCount,
-      games: games,
-      steamGames: steamGames,
-    });
+    const steamUserSummary = await SteamUserSummary(steamID);
+    response.json(steamUserSummary);
   };
 }
 
