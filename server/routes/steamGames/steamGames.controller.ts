@@ -2,7 +2,6 @@ import Controller from "../../interfaces/controller.interface";
 import { Request, Response, Router } from "express";
 import { getSteamID } from "./getSteamID";
 import { SteamUserSummary } from "./SteamUserSummary";
-import { updateSteamGameLibrary } from "./updateSteamGameLibrary";
 
 class SteamGames implements Controller {
   public path = "/steam-games";
@@ -13,21 +12,14 @@ class SteamGames implements Controller {
   }
 
   private initializeRoutes() {
-    this.router
-      .get(`${this.path}/:username`, this.getUserGames)
-      .get(`${this.path}`, this.getAllGames);
+    this.router.get(`${this.path}/:username`, this.getUserSummary);
   }
 
-  private getUserGames = async (request: Request, response: Response) => {
+  private getUserSummary = async (request: Request, response: Response) => {
     const userName = request.params.username;
     const steamID = await getSteamID(userName);
     const steamUserSummary = await SteamUserSummary(steamID);
     response.json(steamUserSummary);
-  };
-
-  private getAllGames = async (request: Request, response: Response) => {
-    const status = await updateSteamGameLibrary();
-    response.json(status);
   };
 }
 

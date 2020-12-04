@@ -1,15 +1,12 @@
 import fetch from "node-fetch";
-import { SteamGameDetailsDB } from "./SteamGameDetails";
 import { SteamUserInfo } from "./steamGames.interface";
-import { addGameToDB } from "./updateSteamGameLibrary";
 
 export const SteamUserSummary = async (steamID: string) => {
   const steamUserInfo = await getSteamUserInfo(steamID);
   const steamUserGames = await getSteamUserGames(steamID);
-  //const games = await getSteamUserGamesDetails(steamUserGames.games);
   const steamUserSummary = {
-    steamUserInfo: steamUserInfo,
-    steamUserGames: steamUserGames,
+    ...steamUserInfo,
+    ...steamUserGames,
   };
   return steamUserSummary;
 };
@@ -78,48 +75,4 @@ const getSteamUserGames = (steamID: string) => {
         ),
       };
     });
-};
-
-const getSteamUserGamesDetails = async (
-  games: { appid: number; playtime_forever: number }[]
-) => {
-  const gamesDetails: {
-    appid: number;
-    name: string;
-    playtime_forever: number;
-    image: string;
-  }[] = [];
-
-  for (let i = 0; i < games.length; i++) {
-    let gameDetails = await SteamGameDetailsDB(games[i]);
-    if (!gameDetails) {
-      let { status, gameDetails } = await addGameToDB(games[i].appid);
-      console.log(`STATUS: ${status}`);
-      console.log(`GAME DETAILS: ${JSON.stringify(gameDetails)}`);
-      if (status === "added to DB") {
-      }
-    } else {
-      gamesDetails.push({
-        ...gameDetails,
-        playtime_forever: games[i].playtime_forever,
-      });
-    }
-  }
-
-  //   games.forEach(async (game) => {
-  //     let gameDetails = await SteamGameDetailsDB(game);
-  //     if (!gameDetails) {
-  //       let { status, gameDetails } = await addGameToDB(game.appid);
-  //       console.log(`STATUS: ${status}`);
-  //       console.log(`GAME DETAILS: ${JSON.stringify(gameDetails)}`);
-  //       if (status === "added to DB") {
-  //       }
-  //     } else {
-  //       gamesDetails.push({
-  //         ...gameDetails,
-  //         playtime_forever: game.playtime_forever,
-  //       });
-  //     }
-  //   });
-  return gamesDetails;
 };
