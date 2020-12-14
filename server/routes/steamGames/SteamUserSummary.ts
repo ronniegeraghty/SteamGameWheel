@@ -54,8 +54,7 @@ const getSteamUserGames = (steamID: string) => {
     })
     .then((json) => {
       const userGames = json.response;
-      console.log(`GameCount: ${userGames.games_count}`);
-      if (userGames.games_count) {
+      if (userGames.game_count) {
         return {
           game_count: userGames.game_count,
           games: userGames.games.map(
