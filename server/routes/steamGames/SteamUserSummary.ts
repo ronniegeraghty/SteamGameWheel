@@ -54,25 +54,33 @@ const getSteamUserGames = (steamID: string) => {
     })
     .then((json) => {
       const userGames = json.response;
-      return {
-        game_count: userGames.game_count,
-        games: userGames.games.map(
-          (game: {
-            appid: number;
-            name: string;
-            playtime_forever: number;
-            img_icon_url: string;
-            img_logo_url: string;
-          }) => {
-            return {
-              appid: game.appid,
-              name: game.name,
-              playtime_forever: game.playtime_forever,
-              img_icon_url: game.img_icon_url,
-              img_logo_url: game.img_logo_url,
-            };
-          }
-        ),
-      };
+      console.log(`GameCount: ${userGames.games_count}`);
+      if (userGames.games_count) {
+        return {
+          game_count: userGames.game_count,
+          games: userGames.games.map(
+            (game: {
+              appid: number;
+              name: string;
+              playtime_forever: number;
+              img_icon_url: string;
+              img_logo_url: string;
+            }) => {
+              return {
+                appid: game.appid,
+                name: game.name,
+                playtime_forever: game.playtime_forever,
+                img_icon_url: game.img_icon_url,
+                img_logo_url: game.img_logo_url,
+              };
+            }
+          ),
+        };
+      } else {
+        return {
+          game_count: 0,
+          games: [],
+        };
+      }
     });
 };
