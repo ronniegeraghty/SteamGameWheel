@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import stypes from "./login.module.css";
+import styles from "./login.module.css";
 type propsType = {
   setUserInfoCB: (userName: string) => void;
 };
@@ -10,7 +10,7 @@ const Login = ({ setUserInfoCB }: propsType) => {
     setUserInfoCB(userName);
   };
   return (
-    <div className={stypes.login}>
+    <div className={styles.login}>
       <form onSubmit={submitUserName}>
         <input
           type="text"
