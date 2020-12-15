@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;900&display=swap");
-html {
-  position: relative;
-  min-height: 100%;
+.Header {
+  background-color: teal;
+  height: 3rem;
 }
-body {
-  font-family: Roboto !important;
+.brand {
+  font-weight: 900;
 }
