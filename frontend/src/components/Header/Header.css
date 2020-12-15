@@ -9,10 +9,10 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 0px 0px 30px 30px;
-  /* border-radius: 30px;
-  background: linear-gradient(145deg, #00b9ff, #009cd6); */
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.158);
 }
 .brand {
   font-weight: 900;
+  font-size: 2rem;
+  color: white;
 }

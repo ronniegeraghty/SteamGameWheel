@@ -7,9 +7,19 @@ body {
   font-family: Roboto !important;
 }
 .App {
-  background: linear-gradient(-45deg, #000000, #00adee);
+  background: url("./images/steam-icon.svg"),
+    linear-gradient(-45deg, #000000, #00adee);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
   height: 100vh;
   width: 100vw;
   padding: 0em;
   position: relative;
+}
+.SteamIcon {
+  position: absolute;
+  display: block;
+  margin: auto;
+  text-align: center;
 }
