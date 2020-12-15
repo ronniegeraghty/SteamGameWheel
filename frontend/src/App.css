@@ -6,3 +6,10 @@ html {
 body {
   font-family: Roboto !important;
 }
+.App {
+  background: linear-gradient(-45deg, #000000, #00adee);
+  height: 100vh;
+  width: 100vw;
+  padding: 0em;
+  position: relative;
+}
