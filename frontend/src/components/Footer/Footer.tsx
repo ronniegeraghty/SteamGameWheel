@@ -1,6 +1,6 @@
 import React from "react";
 import "./Footer.css";
-import npmPackage from "../../../../package.json";
+// import npmPackage from "../../../../package.json";
 
 const Footer = () => {
   return (

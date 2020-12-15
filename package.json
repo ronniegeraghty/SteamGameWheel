@@ -1,8 +1,8 @@
 {
   "name": "steam-game-wheel",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A web app that pick a random game from a Steam User's game library for them to play. ",
-  "main": "./build/server.js",
+  "main": "./build/server/server.js",
   "scripts": {
     "build-server": "node buildScript.js server",
     "start-server": "node .",

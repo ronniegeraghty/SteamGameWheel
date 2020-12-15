@@ -6,4 +6,6 @@ build
 
 # environment
 .env
-sgw.sqlite
+
+# development
+xd-exports

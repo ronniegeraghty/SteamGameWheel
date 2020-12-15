@@ -1,4 +1,4 @@
-import { response, Router } from "express";
+import { Router } from "express";
 import Controller from "../../interfaces/controller.interface";
 import { Request, Response } from "express";
 
