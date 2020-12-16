@@ -1,0 +1,14 @@
+.Login {
+  margin: 5% 0%;
+  text-align: center;
+}
+.LoginForm {
+  border: 5px solid grey;
+  display: inline-block;
+}
+
+.UserNameInput {
+  border: none;
+  border-bottom: 1px solid grey;
+  background: none;
+}
