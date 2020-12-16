@@ -12,13 +12,7 @@ class Version implements Controller {
     this.router.get(this.path, this.getVersion);
   }
   private getVersion = (req: Request, res: Response) => {
-    try {
-      console.log(`VERSION API`);
-      console.log(`Version: ${npmPackage.version}`);
-      res.json({ version: npmPackage.version });
-    } catch (error) {
-      console.log(error.message);
-    }
+    res.json({ version: npmPackage.version });
   };
 }
 export default Version;
