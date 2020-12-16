@@ -1,6 +1,33 @@
 .Footer {
   position: absolute;
   bottom: 0%;
-  color: white;
+  color: rgb(168, 168, 168);
   margin: 1%;
+  width: 98%;
+  display: grid;
+  grid-template-areas: "Version Author Github";
+}
+.Version {
+  grid-area: Version;
+}
+.Author {
+  text-align: center;
+  grid-area: Author;
+}
+
+.Github {
+  text-align: right;
+  grid-area: Github;
+}
+.GithubIcon {
+  vertical-align: text-bottom;
+  margin-right: 5px;
+  display: inline;
+}
+.GithubLink {
+  color: rgb(168, 168, 168);
+}
+.GithubLink:hover {
+  color: rgb(102, 102, 102);
+  text-decoration: none;
 }
