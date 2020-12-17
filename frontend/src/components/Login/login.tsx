@@ -1,7 +1,13 @@
 import React, { useState } from "react";
+import AppState from "../../interfaces/AppState";
 import "./Login.css";
 
-const Login = () => {
+type propsType = {
+  appState: AppState;
+  setUserInfoCB: (submitedUserName: string) => void;
+};
+
+const Login = ({ appState, setUserInfoCB }: propsType) => {
   const [userName, setUserName] = useState<string>("");
   const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -9,7 +15,7 @@ const Login = () => {
   };
   const login = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(`USERNAME: ${userName}`);
+    setUserInfoCB(userName);
   };
   return (
     <div className="Login">

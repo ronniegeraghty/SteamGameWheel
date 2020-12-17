@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import { Switch, Route } from "react-router-dom";
 import "./App.css";
+import AppState, { InitAppState } from "./interfaces/AppState";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
+import { fetchUserInfo } from "./functions/FetchUserInfo";
 
-//TODO Web Template Studio: Add routes for your new pages here.
 const App = () => {
+  const [appState, setAppState] = useState<AppState>(InitAppState);
+  const setUserInfo = (submitedUserName: string) => {
+    console.log(submitedUserName);
+    fetchUserInfo(submitedUserName)?.then((userInfo) => {
+      setAppState({ userInfo: userInfo });
+    });
+  };
   return (
     <div className="App">
       <React.Fragment>
-        <Header />
+        <Header appState={appState} setUserInfoCB={setUserInfo} />
         {/* <Switch>
           <Route exact path="/" component={Blank} />
         </Switch> */}
