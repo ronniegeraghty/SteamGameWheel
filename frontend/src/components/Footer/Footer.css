@@ -1,7 +1,7 @@
 .Footer {
   position: absolute;
   bottom: 0%;
-  color: rgb(168, 168, 168);
+  color: rgba(168, 168, 168, 0.473);
   margin: 1%;
   width: 98%;
   display: grid;
@@ -25,9 +25,10 @@
   display: inline;
 }
 .GithubLink {
-  color: rgb(168, 168, 168);
+  color: rgba(168, 168, 168, 0.473);
+  margin: 1%;
 }
 .GithubLink:hover {
-  color: rgb(102, 102, 102);
+  color: rgb(168, 168, 168);
   text-decoration: none;
 }
