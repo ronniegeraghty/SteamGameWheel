@@ -17,3 +17,6 @@ body {
   padding: 0em;
   position: relative;
 }
+*:focus {
+  outline: none;
+}
