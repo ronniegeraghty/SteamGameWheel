@@ -1,6 +1,7 @@
 import React from "react";
 import AppState from "../../interfaces/AppState";
 import Login from "../Login/Login";
+import UserIcon from "../UserIcon/UserIcon";
 import "./Header.css";
 
 type propsType = {
@@ -12,7 +13,7 @@ const Header = ({ appState, setUserInfoCB }: propsType) => {
     <div className="Header">
       <h1 className="brand">STEAM GAME WHEEL</h1>
       {appState.userInfo ? (
-        appState.userInfo.personaname
+        <UserIcon appState={appState} />
       ) : (
         <Login appState={appState} setUserInfoCB={setUserInfoCB} />
       )}
