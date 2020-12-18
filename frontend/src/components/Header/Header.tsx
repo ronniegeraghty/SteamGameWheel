@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import AppState from "../../interfaces/AppState";
 import Login from "../Login/Login";
 import UserIcon from "../UserIcon/UserIcon";
@@ -19,9 +19,7 @@ const Header = ({ appState, setUserInfoCB }: propsType) => {
       height: !appState.userInfo ? height + 50 : 10,
     },
   });
-  useEffect(() => {
-    console.log(`Height: ${height}`);
-  }, [height]);
+
   return (
     <div className="Header">
       <h1 className="brand">STEAM GAME WHEEL</h1>
