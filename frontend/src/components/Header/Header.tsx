@@ -11,22 +11,41 @@ type propsType = {
   setUserInfoCB: (submitedUserName: string) => void;
 };
 const Header = ({ appState, setUserInfoCB }: propsType) => {
+  const slideInFromTopStyles = useSpring({
+    config: {
+      duration: 500,
+      ...config.stiff,
+    },
+    from: { marginTop: -50, opacity: 0 },
+    to: {
+      marginTop: appState.userInfo ? 0 : -50,
+      opacity: appState.userInfo ? 1 : 0,
+    },
+  });
   const [heightRef, height] = useHeight();
-  const slideInStyles = useSpring({
+  const heightChangeStyles = useSpring({
     config: { ...config.stiff },
     from: { height: height },
     to: {
-      height: !appState.userInfo ? height + 50 : 10,
+      height: !appState.userInfo ? height + 50 : 0,
     },
   });
 
   return (
     <div className="Header">
       <h1 className="brand">STEAM GAME WHEEL</h1>
-      {appState.userInfo && <UserIcon appState={appState} />}
       <animated.div
         style={{
-          ...slideInStyles,
+          ...slideInFromTopStyles,
+          display: "inline",
+          float: "right",
+        }}
+      >
+        {appState.userInfo && <UserIcon appState={appState} />}
+      </animated.div>
+      <animated.div
+        style={{
+          ...heightChangeStyles,
           overflow: "hidden",
         }}
       >
