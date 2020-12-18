@@ -11,14 +11,12 @@ type propsType = {
   setUserInfoCB: (submitedUserName: string) => void;
 };
 const Header = ({ appState, setUserInfoCB }: propsType) => {
-  const [toggle, setToggle] = useState<boolean>(false);
   const [heightRef, height] = useHeight();
   const slideInStyles = useSpring({
     config: { ...config.stiff },
-    from: { opacity: 0, height: 0 },
+    from: { height: height },
     to: {
-      opacity: toggle ? 1 : 0,
-      height: toggle ? height + 50 : 0,
+      height: !appState.userInfo ? height + 50 : 10,
     },
   });
   useEffect(() => {
@@ -27,20 +25,20 @@ const Header = ({ appState, setUserInfoCB }: propsType) => {
   return (
     <div className="Header">
       <h1 className="brand">STEAM GAME WHEEL</h1>
-      <button
-        onClick={() => {
-          setToggle(!toggle);
+      {appState.userInfo && <UserIcon appState={appState} />}
+      <animated.div
+        style={{
+          ...slideInStyles,
+          overflow: "hidden",
         }}
       >
-        Toggle
-      </button>
-      <animated.div style={{ ...slideInStyles, overflow: "hidden" }}>
-        <div ref={heightRef}>
-          {appState.userInfo ? (
-            <UserIcon appState={appState} />
-          ) : (
+        <div
+          ref={heightRef}
+          style={{ display: !appState.userInfo ? "block" : "inline" }}
+        >
+          {!appState.userInfo && (
             <Login appState={appState} setUserInfoCB={setUserInfoCB} />
-          )}{" "}
+          )}
         </div>
       </animated.div>
     </div>
