@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;900&display=swap");
+.Header {
+  position: relative;
+  margin: 0;
+  padding: 1.5em;
+  display: inline-block;
+  height: auto;
+  width: 100vw;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 0px 0px 30px 30px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.158);
+}
+
+.brand {
+  font-weight: 900;
+  font-size: 2rem;
+  color: white;
+  display: inline;
+}

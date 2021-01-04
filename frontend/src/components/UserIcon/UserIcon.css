@@ -1,0 +1,22 @@
+.UserIcon {
+  display: inline;
+  vertical-align: middle;
+}
+.UserIcon:hover {
+  cursor: pointer;
+  opacity: 0.75;
+}
+.UserIcon:active {
+  opacity: 0.5;
+}
+.UserName {
+  display: inline-block;
+  color: white;
+  margin-right: 0.5em;
+}
+
+.SteamAvatar {
+  display: inline-block;
+  max-height: 5vh;
+  border-radius: 50%;
+}

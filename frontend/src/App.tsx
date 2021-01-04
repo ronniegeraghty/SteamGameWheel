@@ -1,22 +1,29 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
+import React, { useState } from "react";
+// import { Switch, Route } from "react-router-dom";
 import "./App.css";
-import NavBar from "./components/NavBar/NavBar";
+import AppState, { InitAppState } from "./interfaces/AppState";
 import Footer from "./components/Footer/Footer";
-import Blank from "./components/Blank/Blank";
-import SteamWheel from "./components/SteamWheel/steamWheel";
+import Header from "./components/Header/Header";
+import { fetchUserInfo } from "./functions/FetchUserInfo";
 
-//TODO Web Template Studio: Add routes for your new pages here.
 const App = () => {
+  const [appState, setAppState] = useState<AppState>(InitAppState);
+  const setUserInfo = (submitedUserName: string) => {
+    console.log(submitedUserName);
+    fetchUserInfo(submitedUserName)?.then((userInfo) => {
+      setAppState({ userInfo: userInfo });
+    });
+  };
   return (
-    <React.Fragment>
-      <NavBar />
-      <Switch>
-        <Route exact path="/" component={SteamWheel} />
-        <Route path="/blank" component={Blank} />
-      </Switch>
-      <Footer />
-    </React.Fragment>
+    <div className="App">
+      <React.Fragment>
+        <Header appState={appState} setUserInfoCB={setUserInfo} />
+        {/* <Switch>
+          <Route exact path="/" component={Blank} />
+        </Switch> */}
+        <Footer />
+      </React.Fragment>
+    </div>
   );
 };
 

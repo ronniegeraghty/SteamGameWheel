@@ -1,37 +1,32 @@
-﻿import React from "react";
-import styles from "./footer.module.css";
+import React, { useState, useEffect } from "react";
+import "./Footer.css";
+import { fetchVersion } from "../../functions/FetchVersion";
+import { FaGithub } from "react-icons/fa";
 
 const Footer = () => {
+  const [version, setVersion] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    fetchVersion()?.then((response) => {
+      setVersion(response);
+    });
+  }, []);
   return (
-    <footer className={styles.footer}>
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-12 col-md-5">
-            <h5 className={styles.title}>Steam Game Wheel</h5>
-            <p className={styles.description}>
-              Randomly pick a Steam Game to play.
-            </p>
+    <div className="Footer">
+      <div className="Version">v {version ? version : "0.0.0"}</div>
+      <div className="Author">by Ronnie Geraghty</div>
+      <div className="Github">
+        <a
+          className="GithubLink"
+          href="https://github.com/ronniegeraghty/SteamGameWheel"
+        >
+          <div className="GithubIcon">
+            <FaGithub />
           </div>
-          <div className="col-2">
-            <ul className="list-unstyled">
-              <li>
-                <a className={styles.footerlink} href="/">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a
-                  className={styles.footerlink}
-                  href="https://github.com/ronniegeraghty/SteamGameWheel"
-                >
-                  GitHub
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
+          GitHub
+        </a>
       </div>
-    </footer>
+    </div>
   );
 };
+
 export default Footer;

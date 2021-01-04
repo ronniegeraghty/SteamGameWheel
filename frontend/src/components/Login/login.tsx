@@ -1,27 +1,36 @@
 import React, { useState } from "react";
-import styles from "./login.module.css";
+import AppState from "../../interfaces/AppState";
+import "./Login.css";
+
 type propsType = {
-  setUserInfoCB: (userName: string) => void;
+  appState: AppState;
+  setUserInfoCB: (submitedUserName: string) => void;
 };
-const Login = ({ setUserInfoCB }: propsType) => {
-  const [userName, setUserName] = useState("");
-  const submitUserName = (e: React.FormEvent<HTMLFormElement>) => {
+
+const Login = ({ appState, setUserInfoCB }: propsType) => {
+  const [userName, setUserName] = useState<string>("");
+  const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setUserName(e.target.value);
+  };
+  const login = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setUserInfoCB(userName);
   };
   return (
-    <div className={styles.login}>
-      <form onSubmit={submitUserName}>
+    <div className="Login">
+      <form className="LoginForm" onSubmit={login}>
         <input
+          className="UserNameInput"
           type="text"
           name="SteamUserName"
           value={userName}
-          placeholder="Steam UserName"
-          onChange={(e) => {
-            setUserName(e.target.value);
-          }}
+          placeholder="Steam Username"
+          onChange={handleUserNameChange}
         />
-        <button type="submit">Submit</button>
+        <button className="LoginButton" type="submit">
+          Login
+        </button>
       </form>
     </div>
   );
