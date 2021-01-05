@@ -18,8 +18,11 @@ class SteamGames implements Controller {
   private getUserSummary = async (request: Request, response: Response) => {
     const userName = request.params.username;
     const steamID = await getSteamID(userName);
+    if (!steamID) {
+      response.json({ status: "No User Found" });
+    }
     const steamUserSummary = await SteamUserSummary(steamID);
-    response.json(steamUserSummary);
+    response.json({ status: "ok", ...steamUserSummary });
   };
 }
 
