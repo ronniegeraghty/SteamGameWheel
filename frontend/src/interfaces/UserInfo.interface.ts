@@ -1,6 +1,7 @@
 import GameInfo from "./GameInfo.interface";
 
 export default interface UserInfo {
+  status: string;
   steamid: string;
   personaname: string;
   profileurl: string;

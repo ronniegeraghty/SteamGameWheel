@@ -9,9 +9,12 @@ import { fetchUserInfo } from "./functions/FetchUserInfo";
 const App = () => {
   const [appState, setAppState] = useState<AppState>(InitAppState);
   const setUserInfo = (submitedUserName: string) => {
-    console.log(submitedUserName);
     fetchUserInfo(submitedUserName)?.then((userInfo) => {
-      setAppState({ userInfo: userInfo });
+      if (userInfo.status === "ok") {
+        setAppState({ ...appState, userInfo: userInfo });
+      } else if (userInfo.status === "No User Found") {
+        setAppState({ ...appState, foundSteamUser: false });
+      }
     });
   };
   const logoff = () => {

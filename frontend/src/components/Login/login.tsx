@@ -19,7 +19,12 @@ const Login = ({ appState, setUserInfoCB }: propsType) => {
   };
   return (
     <div className="Login">
-      <form className="LoginForm" onSubmit={login}>
+      <form
+        className={
+          appState.foundSteamUser ? "LoginForm" : "LoginFormUserNotFound"
+        }
+        onSubmit={login}
+      >
         <input
           className="UserNameInput"
           type="text"
@@ -32,6 +37,9 @@ const Login = ({ appState, setUserInfoCB }: propsType) => {
           Login
         </button>
       </form>
+      {!appState.foundSteamUser && (
+        <span className="NoUserFoundText">Steam User Not Found!</span>
+      )}
     </div>
   );
 };
