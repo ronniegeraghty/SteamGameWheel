@@ -5,8 +5,9 @@ import "./UserIcon.css";
 import UserIconMenu from "./UserIconMenu";
 type propsType = {
   appState: AppState;
+  logoffCB: () => void;
 };
-const UserIcon = ({ appState }: propsType) => {
+const UserIcon = ({ appState, logoffCB }: propsType) => {
   const [showUserIconMenu, setShowUserIconMenau] = useState<boolean>(false);
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     setShowUserIconMenau(!showUserIconMenu);
@@ -36,7 +37,7 @@ const UserIcon = ({ appState }: propsType) => {
         />
       </div>
       <animated.div style={slideInFromTopStyles}>
-        {showUserIconMenu && <UserIconMenu />}
+        {showUserIconMenu && <UserIconMenu logoffCB={logoffCB} />}
       </animated.div>
     </div>
   );

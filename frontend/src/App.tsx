@@ -14,10 +14,17 @@ const App = () => {
       setAppState({ userInfo: userInfo });
     });
   };
+  const logoff = () => {
+    setAppState(InitAppState);
+  };
   return (
     <div className="App">
       <React.Fragment>
-        <Header appState={appState} setUserInfoCB={setUserInfo} />
+        <Header
+          appState={appState}
+          setUserInfoCB={setUserInfo}
+          logoffCB={logoff}
+        />
         {/* <Switch>
           <Route exact path="/" component={Blank} />
         </Switch> */}

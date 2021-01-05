@@ -9,8 +9,9 @@ import { useHeight } from "../../hooks/UseHeight";
 type propsType = {
   appState: AppState;
   setUserInfoCB: (submitedUserName: string) => void;
+  logoffCB: () => void;
 };
-const Header = ({ appState, setUserInfoCB }: propsType) => {
+const Header = ({ appState, setUserInfoCB, logoffCB }: propsType) => {
   const slideInFromTopStyles = useSpring({
     config: {
       duration: 500,
@@ -41,7 +42,9 @@ const Header = ({ appState, setUserInfoCB }: propsType) => {
           float: "right",
         }}
       >
-        {appState.userInfo && <UserIcon appState={appState} />}
+        {appState.userInfo && (
+          <UserIcon appState={appState} logoffCB={logoffCB} />
+        )}
       </animated.div>
       <animated.div
         style={{

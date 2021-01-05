@@ -1,11 +1,16 @@
 import React from "react";
 import "./UserIconMenu.css";
 
-const UserIconMenu = () => {
+type propsType = {
+  logoffCB: () => void;
+};
+const UserIconMenu = ({ logoffCB }: propsType) => {
   return (
     <div className="UserIconMenu">
       <ul className="MenuList">
-        <li>Logoff</li>
+        <li className="Logoff" onClick={logoffCB}>
+          Logoff
+        </li>
         <li>About</li>
       </ul>
     </div>
