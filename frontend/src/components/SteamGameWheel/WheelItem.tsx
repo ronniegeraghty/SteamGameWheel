@@ -1,13 +1,15 @@
 import React from "react";
+import GameInfo from "../../interfaces/GameInfo.interface";
+import "./WheelItem.css";
 type propsType = {
-  gameTitle: string;
-  gameImageURL: string;
+  game: GameInfo;
 };
-const WheelItem = ({ gameTitle, gameImageURL }: propsType) => {
+const WheelItem = ({ game }: propsType) => {
+  const imageURL = `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_logo_url}.jpg`;
   return (
     <div className="WheelItem">
-      <div className="GameTitle">{gameTitle}</div>
-      <div className="GameImage">image</div>
+      {game.name}
+      <img src={imageURL} alt={game.name + " Image"} className="GameImage" />
     </div>
   );
 };

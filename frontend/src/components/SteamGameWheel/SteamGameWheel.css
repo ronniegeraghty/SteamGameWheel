@@ -1,0 +1,8 @@
+.SteamGameWheel {
+  margin-top: 20vh;
+  background-color: lightcyan;
+  height: 20vh;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+}
