@@ -32,7 +32,7 @@ const App = () => {
         {/* <Switch>
           <Route exact path="/" component={Blank} />
         </Switch> */}
-        {appState.userInfo && <SteamGameWheel />}
+        {appState.userInfo && <SteamGameWheel appState={appState} />}
         <Footer />
       </React.Fragment>
     </div>
