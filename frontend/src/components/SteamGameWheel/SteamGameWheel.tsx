@@ -17,34 +17,37 @@ const SteamGameWheel = ({ appState }: propsType) => {
   const wheelRef = useRef<HTMLDivElement | null>(null);
 
   return (
-    <div className="SteamGameWheel">
-      <input
-        type="text"
-        name="scrollTo"
-        value={scrollTo}
-        onChange={(e) => {
-          setScrollTo(Number(e.target.value));
-        }}
-      />
-      <button
-        onClick={(e) => {
-          // e.preventDefault();
+    <div>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
           wheelItemRefs.current[Number(scrollTo)].scrollIntoView({
             behavior: "smooth",
           });
         }}
       >
-        Scroll to
-      </button>
-      <div className="hideOverflow">
-        <div className="Wheel" ref={wheelRef}>
-          {appState.userInfo?.games.map((game, i) => {
-            return (
-              <span ref={addToRefs}>
-                <WheelItem game={game} key={game.appid} />
-              </span>
-            );
-          })}
+        <input
+          type="text"
+          name="scrollTo"
+          value={scrollTo}
+          onChange={(e) => {
+            setScrollTo(Number(e.target.value));
+          }}
+        />
+        <button type="submit">Scroll to</button>
+      </form>
+
+      <div className="SteamGameWheel">
+        <div className="hideOverflow">
+          <div className="Wheel" ref={wheelRef}>
+            {appState.userInfo?.games.map((game, i) => {
+              return (
+                <span ref={addToRefs} key={game.appid}>
+                  <WheelItem game={game} />
+                </span>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
