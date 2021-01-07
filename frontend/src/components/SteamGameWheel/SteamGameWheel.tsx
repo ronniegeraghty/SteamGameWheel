@@ -8,9 +8,13 @@ type propsType = {
 const SteamGameWheel = ({ appState }: propsType) => {
   return (
     <div className="SteamGameWheel">
-      {appState.userInfo?.games.map((game) => (
-        <WheelItem game={game} key={game.appid} />
-      ))}
+      <div className="hideOverflow">
+        <div className="Wheel">
+          {appState.userInfo?.games.map((game) => (
+            <WheelItem game={game} key={game.appid} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

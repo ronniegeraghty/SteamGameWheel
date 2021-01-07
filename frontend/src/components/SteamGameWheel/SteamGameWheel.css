@@ -1,8 +1,15 @@
 .SteamGameWheel {
+  position: relative;
   margin-top: 20vh;
+  width: 100vw;
+  height: 25vh;
   background-color: lightcyan;
-  height: 20vh;
   display: block;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.Wheel {
+  position: absolute;
+  height: 100%;
 }

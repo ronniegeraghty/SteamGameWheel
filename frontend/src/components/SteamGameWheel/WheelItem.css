@@ -1,6 +1,7 @@
 .WheelItem {
   background-color: indigo;
   position: relative;
+  margin-right: 0.5rem;
   height: 100%;
   width: auto;
   display: inline-block;
