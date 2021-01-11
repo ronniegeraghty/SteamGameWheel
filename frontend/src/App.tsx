@@ -5,6 +5,7 @@ import AppState, { InitAppState } from "./interfaces/AppState";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import { fetchUserInfo } from "./functions/FetchUserInfo";
+import SteamGameWheel from "./components/SteamGameWheel/SteamGameWheel";
 
 const App = () => {
   const [appState, setAppState] = useState<AppState>(InitAppState);
@@ -31,6 +32,7 @@ const App = () => {
         {/* <Switch>
           <Route exact path="/" component={Blank} />
         </Switch> */}
+        {appState.userInfo && <SteamGameWheel appState={appState} />}
         <Footer />
       </React.Fragment>
     </div>
