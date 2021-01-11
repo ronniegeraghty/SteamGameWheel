@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import "./SteamGameWheel.css";
 import AppState from "../../interfaces/AppState";
 import WheelItem from "./WheelItem";
@@ -19,7 +19,7 @@ const SteamGameWheel = ({ appState }: propsType) => {
   return (
     <div>
       <form
-        onSubmit={(e) => {
+        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
           e.preventDefault();
           wheelItemRefs.current[Number(scrollTo)].scrollIntoView({
             behavior: "smooth",
