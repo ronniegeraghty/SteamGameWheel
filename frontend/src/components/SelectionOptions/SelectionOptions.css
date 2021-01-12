@@ -1,0 +1,35 @@
+.SelectionOptions {
+  position: relative;
+  margin: auto;
+  width: 65vw;
+}
+.OptionsList {
+  background-color: cyan;
+  display: grid;
+  grid-template-areas:
+    "UnplayedGames Friends"
+    "Genre Friends"
+    "Genre Friends";
+}
+.UnplayedGames {
+  grid-area: UnplayedGames;
+  background-color: lightgreen;
+}
+.Genre {
+  grid-area: Genre;
+  background-color: lightsalmon;
+}
+.Friends {
+  grid-area: Friends;
+  background-color: lightskyblue;
+}
+.TitleLabel {
+  display: block;
+}
+.Option {
+  display: block;
+}
+.ToggleButton {
+  position: absolute;
+  left: 50%;
+}

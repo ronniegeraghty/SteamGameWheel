@@ -5,6 +5,7 @@ import UserIcon from "../UserIcon/UserIcon";
 import { useSpring, animated, config } from "react-spring";
 import "./Header.css";
 import { useHeight } from "../../hooks/UseHeight";
+import SelectionOptions from "../SelectionOptions/SelectionOptions";
 
 type propsType = {
   appState: AppState;
@@ -61,6 +62,7 @@ const Header = ({ appState, setUserInfoCB, logoffCB }: propsType) => {
           )}
         </div>
       </animated.div>
+      <SelectionOptions />
     </div>
   );
 };
