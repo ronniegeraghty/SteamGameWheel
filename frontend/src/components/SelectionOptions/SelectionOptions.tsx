@@ -1,5 +1,6 @@
 import React from "react";
 import "./SelectionOptions.css";
+import { BsChevronDown } from "react-icons/bs";
 const SelectionOptions = () => {
   return (
     <div className="SelectionOptions">
@@ -44,7 +45,9 @@ const SelectionOptions = () => {
           </div>
         </div>
       </form>
-      <button className="ToggleButton">Up</button>
+      <button className="ToggleButton">
+        <BsChevronDown />
+      </button>
     </div>
   );
 };
