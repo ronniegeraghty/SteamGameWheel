@@ -5,6 +5,7 @@ import AppState, { InitAppState } from "./interfaces/AppState";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import { fetchUserInfo } from "./functions/FetchUserInfo";
+import { shuffle } from "./functions/ShuffleArray";
 import SteamGameWheel from "./components/SteamGameWheel/SteamGameWheel";
 
 const App = () => {
@@ -12,7 +13,13 @@ const App = () => {
   const setUserInfo = (submitedUserName: string) => {
     fetchUserInfo(submitedUserName)?.then((userInfo) => {
       if (userInfo.status === "ok") {
-        setAppState({ ...appState, userInfo: userInfo });
+        setAppState({
+          ...appState,
+          userInfo: {
+            ...userInfo,
+            games: shuffle(userInfo.games),
+          },
+        });
       } else if (userInfo.status === "No User Found") {
         setAppState({ ...appState, foundSteamUser: false });
       }
