@@ -43,6 +43,10 @@ const SelectionOptions = () => {
             <input type="checkbox" name="" id="" />
             <label htmlFor="">Fingus</label>
           </div>
+          <div className="Option">
+            <input type="checkbox" name="" id="" />
+            <label htmlFor="">Mingus</label>
+          </div>
         </div>
       </form>
       <button className="ToggleButton">
