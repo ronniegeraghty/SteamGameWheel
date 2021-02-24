@@ -37,8 +37,10 @@
     "node-fetch": "^2.6.1",
     "react-icons": "^4.1.0",
     "react-router-dom": "^5.2.0",
+    "react-three-fiber": "^5.3.19",
     "request": "^2.88.2",
     "sqlite3": "^5.0.0",
+    "three": "^0.126.0",
     "typeorm": "^0.2.29"
   },
   "devDependencies": {

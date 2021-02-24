@@ -7,6 +7,7 @@ import Header from "./components/Header/Header";
 import { fetchUserInfo } from "./functions/FetchUserInfo";
 import { shuffle } from "./functions/ShuffleArray";
 import SteamGameWheel from "./components/SteamGameWheel/SteamGameWheel";
+import GameWheel3D from "./components/GameWheel3D/GameWheel3D";
 
 const App = () => {
   const [appState, setAppState] = useState<AppState>(InitAppState);
@@ -40,6 +41,7 @@ const App = () => {
           <Route exact path="/" component={Blank} />
         </Switch> */}
         {appState.userInfo && <SteamGameWheel appState={appState} />}
+        <GameWheel3D />
         <Footer />
       </React.Fragment>
     </div>
