@@ -7,17 +7,8 @@ const GameWheel3D: React.FC<MeshProps> = (props) => {
   const mesh = useRef<Mesh>();
   const group = useRef<Group>();
   const [active, setActive] = useState(false);
-  const [materials, setMaterials] = useState<MeshPhongMaterial[]>([]);
-  useEffect(() => {
-    var materialTop = new MeshPhongMaterial({ color: "red" });
-    var materialSide = new MeshPhongMaterial({ color: "blue" });
-    var materialBottom = new MeshPhongMaterial({ color: "yellow" });
-    var materialsArray = [];
-    materialsArray.push(materialTop);
-    materialsArray.push(materialSide);
-    materialsArray.push(materialBottom);
-    setMaterials(materialsArray);
-  }, []);
+
+  useEffect(() => {}, []);
   useFrame(() => {
     //if (mesh.current) mesh.current.rotation.x = mesh.current.rotation.y += 0.01;
     if (group.current)
