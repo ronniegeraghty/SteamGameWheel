@@ -9,7 +9,7 @@ const GameWheel3D: React.FC<MeshProps> = (props) => {
   const [segments, setSegments] = useState<string[]>([]);
 
   useEffect(() => {
-    let len = 20;
+    let len = 50;
     let tempArr = [];
     for (let i = 0; i < len; i++) {
       tempArr.push("");
