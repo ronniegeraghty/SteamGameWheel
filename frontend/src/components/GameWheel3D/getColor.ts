@@ -30,9 +30,9 @@ const getColor = (index: number, numberOfSegments: number): string => {
   }
   hexColor =
     "#" + decToColorHex(red) + decToColorHex(green) + decToColorHex(blue);
-  console.log(
-    `INDEX:${index}\nNORMALIZED_NUM:${normalizedNum}\nHEX_COLOR:${hexColor}`
-  );
+  // console.log(
+  //   `INDEX:${index}\nNORMALIZED_NUM:${normalizedNum}\nHEX_COLOR:${hexColor}`
+  // );
   return hexColor;
 };
 const decToColorHex = (dec: number) => {

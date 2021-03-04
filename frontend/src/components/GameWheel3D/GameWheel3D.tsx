@@ -9,7 +9,7 @@ const GameWheel3D: React.FC<MeshProps> = (props) => {
   const [segments, setSegments] = useState<string[]>([]);
 
   useEffect(() => {
-    let len = 10;
+    let len = 5;
     let tempArr = [];
     for (let i = 0; i < len; i++) {
       tempArr.push("");
@@ -23,7 +23,7 @@ const GameWheel3D: React.FC<MeshProps> = (props) => {
     <group
       ref={group}
       position={[0, 0, -segments.length]}
-      rotation={[0, 0, 0]}
+      rotation={[0.5, 0, 0]}
       scale={active ? [2, 2, 2] : [1, 1, 1]}
       onClick={(event) => setActive(!active)}
     >
