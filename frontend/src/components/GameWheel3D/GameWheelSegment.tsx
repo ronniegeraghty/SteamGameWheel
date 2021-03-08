@@ -1,7 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useUpdate } from "react-three-fiber";
-import * as THREE from "three";
-import { CylinderGeometry, EdgesGeometry, LineSegments, Mesh } from "three";
+import {
+  CylinderBufferGeometry,
+  EdgesGeometry,
+  LineBasicMaterial,
+  LineSegments,
+  Mesh,
+  MeshBasicMaterial,
+} from "three";
 import getColor from "./getColor";
 
 type PropTypes = {
@@ -13,22 +18,22 @@ const GameWheelSegment = ({ numberOfSegments, index, color }: PropTypes) => {
   const [newColor, setNewColor] = useState("#000000");
   const [radius, setRadius] = useState(0);
   const cylinderMesh = useRef<Mesh>();
-  const cylinderGeometry = new THREE.CylinderBufferGeometry(
+  const cylinderGeometry = new CylinderBufferGeometry(
     radius,
     radius,
     3,
     1,
     1,
-    false,
+    true,
     0,
     (2 * Math.PI) / numberOfSegments
   );
-  const cylinderMaterial = new THREE.MeshBasicMaterial({ color: newColor });
+  const cylinderMaterial = new MeshBasicMaterial({ color: newColor });
   const wireFrameMesh = useRef<LineSegments>();
-  const wireFrameGeometry = new THREE.EdgesGeometry(cylinderGeometry);
-  const wireFrameMaterial = new THREE.LineBasicMaterial({
+  const wireFrameGeometry = new EdgesGeometry(cylinderGeometry);
+  const wireFrameMaterial = new LineBasicMaterial({
     color: "black",
-    linewidth: 1,
+    linewidth: 5,
     transparent: true,
     opacity: 1,
     depthTest: false,
