@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
-import { MeshProps, useFrame } from "react-three-fiber";
+import { useFrame } from "react-three-fiber";
 import { Group } from "three";
-import { getRepository } from "typeorm";
 import GameWheelSegment from "./GameWheelSegment";
 
 type PropTypes = {
