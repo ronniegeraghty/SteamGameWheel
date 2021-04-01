@@ -14,14 +14,18 @@ const GameWheel3D = ({ segments, rotation, setRotation, spin }: PropTypes) => {
   const group = useRef<Group>();
   const [active, setActive] = useState(false);
   const [speed, setSpeed] = useState(0.001);
+  const [spinning, setSpinning] = useState(false);
 
   useFrame(() => {
     if (group.current) {
-      if (spin) {
-        group.current.rotation.y += speed;
+      if (spin && !spinning) {
+        setSpinning(true);
+      } else if (!spin && spinning) {
+        setSpinning(false);
         setRotation(group.current.rotation.y);
-      } else {
-        group.current.rotation.y = rotation;
+      }
+      if (spinning) {
+        group.current.rotation.y += speed;
       }
     }
   });
