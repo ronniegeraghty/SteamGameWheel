@@ -26,6 +26,7 @@ const GameWheelCanvas = () => {
           rotation={rotation}
           setRotation={setRotation}
           spin={spin}
+          setSpin={setSpin}
         />
       </Canvas>
     </div>

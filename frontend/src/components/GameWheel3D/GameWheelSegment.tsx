@@ -48,13 +48,13 @@ const GameWheelSegment = ({ numberOfSegments, index, color }: PropTypes) => {
     <group>
       <mesh
         ref={cylinderMesh}
-        geometry={cylinderGeometry}
-        material={cylinderMaterial}
+        // geometry={cylinderGeometry}
+        //material={cylinderMaterial}
         position={[0, 0, 0]}
         scale={[1, 1, 1]}
         rotation={[0, (index * 2 * Math.PI) / numberOfSegments, 0]}
       >
-        {/* <cylinderBufferGeometry
+        <cylinderBufferGeometry
           args={[
             radius,
             radius,
@@ -66,9 +66,9 @@ const GameWheelSegment = ({ numberOfSegments, index, color }: PropTypes) => {
             (2 * Math.PI) / numberOfSegments,
           ]}
         />
-        <meshStandardMaterial color={newColor} /> */}
+        <meshStandardMaterial color={newColor} />
       </mesh>
-      <lineSegments
+      {/* <lineSegments
         ref={wireFrameMesh}
         geometry={wireFrameGeometry}
         material={wireFrameMaterial}
@@ -76,14 +76,14 @@ const GameWheelSegment = ({ numberOfSegments, index, color }: PropTypes) => {
         scale={[1, 1, 1]}
         rotation={[0, (index * 2 * Math.PI) / numberOfSegments, 0]}
       >
-        {/* <lineBasicMaterial
+        <lineBasicMaterial
           color="black"
           linewidth={3}
           resolution={[512, 512]}
           transparent
           opacity={1}
-        /> */}
-      </lineSegments>
+        /> 
+      </lineSegments> */}
     </group>
   );
 };
