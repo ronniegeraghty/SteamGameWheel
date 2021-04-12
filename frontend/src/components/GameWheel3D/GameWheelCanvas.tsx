@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Canvas } from "react-three-fiber";
 import GameWheel3D from "./GameWheel3D";
-
+import "./GameWheelCanvas.css";
 const GameWheelCanvas = () => {
   const [rotation, setRotation] = useState(0);
   const [segments, setSegments] = useState<string[]>([]);
@@ -15,7 +15,7 @@ const GameWheelCanvas = () => {
     setSegments(temp);
   }, []);
   return (
-    <div style={{ height: "50%" }}>
+    <div className="Canvas">
       <h5 style={{ color: "#FFFFFF" }}>Rotation: {rotation}</h5>
       <button onClick={(event) => setSpin(!spin)}>Spin</button>
       <Canvas>

@@ -19,7 +19,7 @@ const GameWheel3D = ({
   setSpin,
 }: PropTypes) => {
   const [state, setState] = useState("initialState");
-  const [speed, setSpeed] = useState((0.01 * 2 * Math.PI) / segments.length);
+  const [speed, setSpeed] = useState((0.1 * 2 * Math.PI) / segments.length);
   const group = useRef<Group>();
   useFrame(() => {
     if (group.current) {
@@ -61,7 +61,7 @@ const GameWheel3D = ({
   return (
     <group
       ref={group}
-      position={[0, 1, -segments.length]}
+      position={[0, 0.5, -segments.length]}
       rotation={[0, 0, 0]}
       scale={[1, 1, 1]}
     >
