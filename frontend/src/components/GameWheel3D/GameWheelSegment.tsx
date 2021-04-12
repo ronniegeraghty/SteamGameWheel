@@ -13,8 +13,14 @@ type PropTypes = {
   numberOfSegments: number;
   index: number;
   color: string;
+  addLineSegments: boolean;
 };
-const GameWheelSegment = ({ numberOfSegments, index, color }: PropTypes) => {
+const GameWheelSegment = ({
+  numberOfSegments,
+  index,
+  color,
+  addLineSegments,
+}: PropTypes) => {
   const [newColor, setNewColor] = useState("#000000");
   const [radius, setRadius] = useState(0);
   const cylinderMesh = useRef<Mesh>();
@@ -61,29 +67,31 @@ const GameWheelSegment = ({ numberOfSegments, index, color }: PropTypes) => {
             3,
             1,
             1,
-            false,
+            true,
             0,
             (2 * Math.PI) / numberOfSegments,
           ]}
         />
         <meshStandardMaterial color={newColor} />
       </mesh>
-      {/* <lineSegments
-        ref={wireFrameMesh}
-        geometry={wireFrameGeometry}
-        material={wireFrameMaterial}
-        position={[0, 0, 0]}
-        scale={[1, 1, 1]}
-        rotation={[0, (index * 2 * Math.PI) / numberOfSegments, 0]}
-      >
-        <lineBasicMaterial
-          color="black"
-          linewidth={3}
-          resolution={[512, 512]}
-          transparent
-          opacity={1}
-        /> 
-      </lineSegments> */}
+      {addLineSegments && (
+        <lineSegments
+          ref={wireFrameMesh}
+          geometry={wireFrameGeometry}
+          material={wireFrameMaterial}
+          position={[0, 0, 0]}
+          scale={[1, 1, 1]}
+          rotation={[0, (index * 2 * Math.PI) / numberOfSegments, 0]}
+        >
+          <lineBasicMaterial
+            color="black"
+            linewidth={3}
+            resolution={[512, 512]}
+            transparent
+            opacity={1}
+          />
+        </lineSegments>
+      )}
     </group>
   );
 };
