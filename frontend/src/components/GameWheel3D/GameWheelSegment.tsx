@@ -42,7 +42,7 @@ const GameWheelSegment = ({
     linewidth: 5,
     transparent: true,
     opacity: 1,
-    depthTest: false,
+    depthTest: true,
   });
 
   useEffect(() => {
