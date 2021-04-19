@@ -19,8 +19,18 @@ const GameWheel3D = ({
   setSpin,
 }: PropTypes) => {
   const [state, setState] = useState("initialState");
-  const [speed, setSpeed] = useState((0.01 * 2 * Math.PI) / segments.length);
+  const [speed, setSpeed] = useState((0.05 * 2 * Math.PI) / segments.length);
   const group = useRef<Group>();
+  const [selected, setSelected] = useState<number | null>(null);
+  const segmentFromRotation = (rotation: number): number => {
+    let normRotation = rotation % (2 * Math.PI);
+    let segment =
+      segments.length -
+      Math.floor((normRotation / (2 * Math.PI)) * segments.length) -
+      1;
+    console.log(`SEGMENT: ${segment}`);
+    return segment;
+  };
   useFrame(() => {
     if (group.current) {
       if (state === "initialState") {
@@ -45,6 +55,8 @@ const GameWheel3D = ({
           setState("stopped");
           setSpin(false);
           setRotation(group.current.rotation.y % (2 * Math.PI));
+          //Set selected segment
+          setSelected(segmentFromRotation(group.current.rotation.y));
         }
       } else if (state === "stopped") {
         // Clicked spin button again
@@ -72,6 +84,7 @@ const GameWheel3D = ({
           index={index}
           color={color}
           addLineSegments={true}
+          selected={selected === index}
         />
       ))}
     </group>
