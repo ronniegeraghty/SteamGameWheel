@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Group, ShapeGeometry } from "three";
+import { Group } from "three";
 import GameWheelSegment from "./GameWheelSegment";
 
 type PropTypes = {
@@ -18,25 +18,24 @@ const GameWheel3D = ({
   spin,
   setSpin,
 }: PropTypes) => {
+  const twoPI = 2 * Math.PI;
+  const cirPerSeg = twoPI / segments.length;
   const [state, setState] = useState("initialState");
-  const [speed, setSpeed] = useState((0.05 * 2 * Math.PI) / segments.length);
+  const [speed, setSpeed] = useState(0.05 * cirPerSeg);
   const group = useRef<Group>();
   const [selected, setSelected] = useState<number | null>(null);
   const startSpin = () => {
     if (group.current) {
       setState("spinning");
       // Randomly Set Starting point
-      group.current.rotation.y = Math.random() * 2 * Math.PI;
+      group.current.rotation.y = Math.random() * twoPI;
       // Set Spin Starting Speed
-      setSpeed(2 * Math.PI);
+      setSpeed(twoPI);
     }
   };
   const segmentFromRotation = (rotation: number): number => {
-    let normRotation = rotation % (2 * Math.PI);
-    let segment =
-      segments.length -
-      Math.floor((normRotation / (2 * Math.PI)) * segments.length) -
-      1;
+    let normRotation = rotation % twoPI;
+    let segment = segments.length - Math.floor(normRotation / cirPerSeg) - 1;
     console.log(`SEGMENT: ${segment}`);
     return segment;
   };
@@ -45,37 +44,29 @@ const GameWheel3D = ({
     if (group.current) {
       if (state === "initialState") {
         // Inital slow spin while waiting for first spin
-        group.current.rotation.y += speed * ((2 * Math.PI) / segments.length);
+        group.current.rotation.y += speed * cirPerSeg;
         // If Spin Button Clicked
         if (spin) startSpin();
       } else if (state === "spinning") {
         console.log(`Speed: ${speed}`);
         // Spin
-        group.current.rotation.y += speed * ((2 * Math.PI) / segments.length);
+        group.current.rotation.y += speed * cirPerSeg;
         // Decrease speed
         setSpeed(speed - speed / segments.length);
         //Stop spin if speed low
         if (speed <= 0.001) {
           setState("stopped");
           setSpin(false);
-          setRotation(group.current.rotation.y % (2 * Math.PI));
+          setRotation(group.current.rotation.y % twoPI);
           //Set selected segment
           setSelected(segmentFromRotation(group.current.rotation.y));
         }
       } else if (state === "stopped") {
         //Rotate to center of selected segment
-        if (
-          selected &&
-          group.current.rotation.y !==
-            ((2 * Math.PI) / segments.length) * selected
-        ) {
-          console.log(
-            `New rotation: ${selected * ((2 * Math.PI) / segments.length)}`
-          );
+        if (selected && group.current.rotation.y !== cirPerSeg * selected) {
+          console.log(`New rotation: ${selected * cirPerSeg}`);
           group.current.rotation.y =
-            2 * Math.PI -
-            Math.PI / segments.length -
-            selected * ((2 * Math.PI) / segments.length);
+            twoPI - Math.PI / segments.length - selected * cirPerSeg;
         }
         // Clicked spin button again
         if (spin) startSpin();
