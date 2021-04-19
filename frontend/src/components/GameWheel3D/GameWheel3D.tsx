@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Group } from "three";
+import { Group, ShapeGeometry } from "three";
 import GameWheelSegment from "./GameWheelSegment";
 
 type PropTypes = {
@@ -40,6 +40,7 @@ const GameWheel3D = ({
     console.log(`SEGMENT: ${segment}`);
     return segment;
   };
+
   useFrame(() => {
     if (group.current) {
       if (state === "initialState") {
@@ -62,6 +63,15 @@ const GameWheel3D = ({
           setSelected(segmentFromRotation(group.current.rotation.y));
         }
       } else if (state === "stopped") {
+        //Rotate to center of selected segment
+        if (
+          selected &&
+          group.current.rotation.y !==
+            ((2 * Math.PI) / segments.length) * selected
+        ) {
+          group.current.rotation.y =
+            selected * ((2 * Math.PI) / segments.length);
+        }
         // Clicked spin button again
         if (spin) startSpin();
       }
