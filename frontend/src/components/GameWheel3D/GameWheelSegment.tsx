@@ -88,7 +88,6 @@ const GameWheelSegment = ({
           <lineBasicMaterial
             color="black"
             linewidth={3}
-            resolution={[512, 512]}
             transparent
             opacity={1}
           />

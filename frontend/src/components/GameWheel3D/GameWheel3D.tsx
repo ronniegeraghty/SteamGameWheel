@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { useFrame } from "react-three-fiber";
+import { useFrame } from "@react-three/fiber";
 import { Group } from "three";
 import GameWheelSegment from "./GameWheelSegment";
 

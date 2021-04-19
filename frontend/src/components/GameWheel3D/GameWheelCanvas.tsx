@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Canvas } from "react-three-fiber";
+import { Canvas } from "@react-three/fiber";
 import GameWheel3D from "./GameWheel3D";
 import Pointer from "./Pointer";
 import "./GameWheelCanvas.css";
