@@ -22,6 +22,15 @@ const GameWheel3D = ({
   const [speed, setSpeed] = useState((0.05 * 2 * Math.PI) / segments.length);
   const group = useRef<Group>();
   const [selected, setSelected] = useState<number | null>(null);
+  const startSpin = () => {
+    if (group.current) {
+      setState("spinning");
+      // Randomly Set Starting point
+      group.current.rotation.y = Math.random() * 2 * Math.PI;
+      // Set Spin Starting Speed
+      setSpeed(2 * Math.PI);
+    }
+  };
   const segmentFromRotation = (rotation: number): number => {
     let normRotation = rotation % (2 * Math.PI);
     let segment =
@@ -37,13 +46,7 @@ const GameWheel3D = ({
         // Inital slow spin while waiting for first spin
         group.current.rotation.y += speed * ((2 * Math.PI) / segments.length);
         // If Spin Button Clicked
-        if (spin) {
-          setState("spinning");
-          // Randomly Set Starting point
-          group.current.rotation.y = Math.random() * 2 * Math.PI;
-          // Set Spin Starting Speed
-          setSpeed(2 * Math.PI);
-        }
+        if (spin) startSpin();
       } else if (state === "spinning") {
         console.log(`Speed: ${speed}`);
         // Spin
@@ -60,13 +63,7 @@ const GameWheel3D = ({
         }
       } else if (state === "stopped") {
         // Clicked spin button again
-        if (spin) {
-          setState("spinning");
-          // Randomly Set Starting point
-          group.current.rotation.y = Math.random() * 2 * Math.PI;
-          // Set Spin Starting Speed
-          setSpeed(2 * Math.PI);
-        }
+        if (spin) startSpin();
       }
     }
   });
