@@ -69,7 +69,12 @@ const GameWheel3D = ({
           group.current.rotation.y !==
             ((2 * Math.PI) / segments.length) * selected
         ) {
+          console.log(
+            `New rotation: ${selected * ((2 * Math.PI) / segments.length)}`
+          );
           group.current.rotation.y =
+            2 * Math.PI -
+            Math.PI / segments.length -
             selected * ((2 * Math.PI) / segments.length);
         }
         // Clicked spin button again
@@ -92,6 +97,7 @@ const GameWheel3D = ({
           color={color}
           addLineSegments={true}
           selected={selected === index}
+          showSegmentNumber={true}
         />
       ))}
     </group>
