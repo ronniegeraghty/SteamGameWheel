@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { useFrame } from "react-three-fiber";
+import { useFrame } from "@react-three/fiber";
 import { Group } from "three";
 import GameWheelSegment from "./GameWheelSegment";
 
@@ -18,43 +18,90 @@ const GameWheel3D = ({
   spin,
   setSpin,
 }: PropTypes) => {
-  const [state, setState] = useState("initialState");
-  const [speed, setSpeed] = useState((0.01 * 2 * Math.PI) / segments.length);
+  //Component Constants
+  const twoPI = 2 * Math.PI;
+  const cirPerSeg = twoPI / segments.length;
+  //Ref to 3D GameWheel Object
   const group = useRef<Group>();
-  useFrame(() => {
+  //Component State
+  const [state, setState] = useState("initialState");
+  const [speed, setSpeed] = useState(0.05 * cirPerSeg);
+  const [selected, setSelected] = useState<number | null>(null);
+  const [selectedScale, setSelectedScale] = useState(1);
+  const [distanceToCenter, setDistanceToCenter] = useState<number | null>(null);
+  const startSpin = () => {
+    if (group.current) {
+      setState("spinning");
+      // Randomly Set Starting point
+      group.current.rotation.y = Math.random() * twoPI;
+      // Reset Wheel State to start spin
+      setSpeed(twoPI);
+      setSelected(null);
+      setSelectedScale(1);
+      setDistanceToCenter(null);
+    }
+  };
+  const segmentFromRotation = (rotation: number): number => {
+    let normRotation = rotation % twoPI;
+    let segment = segments.length - Math.floor(normRotation / cirPerSeg) - 1;
+    return segment;
+  };
+
+  useFrame((sceneState, delta) => {
     if (group.current) {
       if (state === "initialState") {
         // Inital slow spin while waiting for first spin
-        group.current.rotation.y += speed * ((2 * Math.PI) / segments.length);
+        group.current.rotation.y += speed * cirPerSeg;
         // If Spin Button Clicked
-        if (spin) {
-          setState("spinning");
-          // Randomly Set Starting point
-          group.current.rotation.y = Math.random() * 2 * Math.PI;
-          // Set Spin Starting Speed
-          setSpeed(2 * Math.PI);
-        }
+        if (spin) startSpin();
       } else if (state === "spinning") {
-        console.log(`Speed: ${speed}`);
+        //console.log(`Speed: ${speed}`);
         // Spin
-        group.current.rotation.y += speed * ((2 * Math.PI) / segments.length);
+        group.current.rotation.y += speed * cirPerSeg;
         // Decrease speed
         setSpeed(speed - speed / segments.length);
         //Stop spin if speed low
         if (speed <= 0.001) {
           setState("stopped");
           setSpin(false);
-          setRotation(group.current.rotation.y % (2 * Math.PI));
+          setRotation(group.current.rotation.y % twoPI);
+          //Set selected segment
+          setSelected(segmentFromRotation(group.current.rotation.y));
         }
       } else if (state === "stopped") {
-        // Clicked spin button again
-        if (spin) {
-          setState("spinning");
-          // Randomly Set Starting point
-          group.current.rotation.y = Math.random() * 2 * Math.PI;
-          // Set Spin Starting Speed
-          setSpeed(2 * Math.PI);
+        //Rotate to center of selected segment
+        //Make sure Select is not null
+        if (selected !== null) {
+          //Constants
+          let centerOfSelectedSegment =
+            twoPI - Math.PI / segments.length - selected * cirPerSeg;
+          let normRotation = group.current.rotation.y % twoPI;
+          let direction = centerOfSelectedSegment - normRotation > 0 ? 1 : -1;
+          if (
+            Math.abs(normRotation - centerOfSelectedSegment) <
+            cirPerSeg * 0.0101
+          ) {
+            //Close to the center of selected Segment
+            group.current.rotation.y = centerOfSelectedSegment;
+          } else if (normRotation !== centerOfSelectedSegment) {
+            //Not close to the center of the selected Segment
+            if (distanceToCenter === null) {
+              //Distance to center not set yet
+              setDistanceToCenter(
+                Math.abs(normRotation - centerOfSelectedSegment)
+              );
+            } else {
+              //Move towards center and start up-scale of segment
+              group.current.rotation.y +=
+                direction * delta * (distanceToCenter / 0.5);
+              setSelectedScale(
+                selectedScale + (delta * 0.1 * (10 / segments.length)) / 0.5
+              );
+            }
+          }
         }
+        // Clicked spin button again
+        if (spin) startSpin();
       }
     }
   });
@@ -72,6 +119,8 @@ const GameWheel3D = ({
           index={index}
           color={color}
           addLineSegments={true}
+          selected={selected === index}
+          selectedScale={selectedScale}
         />
       ))}
     </group>
