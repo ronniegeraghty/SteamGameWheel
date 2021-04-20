@@ -25,6 +25,7 @@ const GameWheel3D = ({
   const group = useRef<Group>();
   const [selected, setSelected] = useState<number | null>(null);
   const [selectedScale, setSelectedScale] = useState(1);
+  const [distanceToCenter, setDistanceToCenter] = useState<number | null>(null);
   const startSpin = () => {
     if (group.current) {
       setState("spinning");
@@ -33,6 +34,8 @@ const GameWheel3D = ({
       // Set Spin Starting Speed
       setSpeed(twoPI);
       setSelected(null);
+      setSelectedScale(1);
+      setDistanceToCenter(null);
     }
   };
   const segmentFromRotation = (rotation: number): number => {
@@ -69,18 +72,25 @@ const GameWheel3D = ({
             twoPI - Math.PI / segments.length - selected * cirPerSeg;
           let normRotation = group.current.rotation.y % twoPI;
           let direction = centerOfSelectedSegment - normRotation > 0 ? 1 : -1;
-          if (normRotation === centerOfSelectedSegment) {
-          } else if (
+          if (
+            normRotation !== centerOfSelectedSegment &&
             Math.abs(normRotation - centerOfSelectedSegment) <
-            cirPerSeg * 0.0101
+              cirPerSeg * 0.0101
           ) {
             group.current.rotation.y = centerOfSelectedSegment;
           } else if (normRotation !== centerOfSelectedSegment) {
-            group.current.rotation.y += direction * delta * cirPerSeg * 0.5;
-            setSelectedScale(selectedScale + 0 * delta);
+            if (distanceToCenter === null) {
+              setDistanceToCenter(
+                Math.abs(normRotation - centerOfSelectedSegment)
+              );
+            } else {
+              // group.current.rotation.y += direction * delta * cirPerSeg * 0.5;
+              group.current.rotation.y +=
+                direction * delta * (distanceToCenter / 0.5);
+              setSelectedScale(selectedScale + (delta * 0.1) / 0.5);
+            }
           }
         }
-
         // Clicked spin button again
         if (spin) startSpin();
       }
