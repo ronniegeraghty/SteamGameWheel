@@ -41,7 +41,7 @@ const GameWheel3D = ({
     return segment;
   };
 
-  useFrame(() => {
+  useFrame((sceneState, delta) => {
     if (group.current) {
       if (state === "initialState") {
         // Inital slow spin while waiting for first spin
@@ -49,7 +49,7 @@ const GameWheel3D = ({
         // If Spin Button Clicked
         if (spin) startSpin();
       } else if (state === "spinning") {
-        console.log(`Speed: ${speed}`);
+        //console.log(`Speed: ${speed}`);
         // Spin
         group.current.rotation.y += speed * cirPerSeg;
         // Decrease speed
@@ -64,7 +64,7 @@ const GameWheel3D = ({
         }
       } else if (state === "stopped") {
         //Rotate to center of selected segment
-        if (selected) {
+        if (selected !== null) {
           let centerOfSelectedSegment =
             twoPI - Math.PI / segments.length - selected * cirPerSeg;
           let normRotation = group.current.rotation.y % twoPI;
@@ -76,8 +76,8 @@ const GameWheel3D = ({
           ) {
             group.current.rotation.y = centerOfSelectedSegment;
           } else if (normRotation !== centerOfSelectedSegment) {
-            group.current.rotation.y += direction * cirPerSeg * 0.01;
-            setSelectedScale(selectedScale + 0.001);
+            group.current.rotation.y += direction * delta * cirPerSeg * 0.5;
+            setSelectedScale(selectedScale + 0 * delta);
           }
         }
 
