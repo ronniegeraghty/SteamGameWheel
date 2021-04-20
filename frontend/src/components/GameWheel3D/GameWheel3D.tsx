@@ -24,6 +24,7 @@ const GameWheel3D = ({
   const [speed, setSpeed] = useState(0.05 * cirPerSeg);
   const group = useRef<Group>();
   const [selected, setSelected] = useState<number | null>(null);
+  const [selectedScale, setSelectedScale] = useState(1);
   const startSpin = () => {
     if (group.current) {
       setState("spinning");
@@ -31,12 +32,12 @@ const GameWheel3D = ({
       group.current.rotation.y = Math.random() * twoPI;
       // Set Spin Starting Speed
       setSpeed(twoPI);
+      setSelected(null);
     }
   };
   const segmentFromRotation = (rotation: number): number => {
     let normRotation = rotation % twoPI;
     let segment = segments.length - Math.floor(normRotation / cirPerSeg) - 1;
-    console.log(`SEGMENT: ${segment}`);
     return segment;
   };
 
@@ -63,11 +64,23 @@ const GameWheel3D = ({
         }
       } else if (state === "stopped") {
         //Rotate to center of selected segment
-        if (selected && group.current.rotation.y !== cirPerSeg * selected) {
-          console.log(`New rotation: ${selected * cirPerSeg}`);
-          group.current.rotation.y =
+        if (selected) {
+          let centerOfSelectedSegment =
             twoPI - Math.PI / segments.length - selected * cirPerSeg;
+          let normRotation = group.current.rotation.y % twoPI;
+          let direction = centerOfSelectedSegment - normRotation > 0 ? 1 : -1;
+          if (normRotation === centerOfSelectedSegment) {
+          } else if (
+            Math.abs(normRotation - centerOfSelectedSegment) <
+            cirPerSeg * 0.0101
+          ) {
+            group.current.rotation.y = centerOfSelectedSegment;
+          } else if (normRotation !== centerOfSelectedSegment) {
+            group.current.rotation.y += direction * cirPerSeg * 0.01;
+            setSelectedScale(selectedScale + 0.001);
+          }
         }
+
         // Clicked spin button again
         if (spin) startSpin();
       }
@@ -88,6 +101,7 @@ const GameWheel3D = ({
           color={color}
           addLineSegments={true}
           selected={selected === index}
+          selectedScale={selectedScale}
           showSegmentNumber={true}
         />
       ))}

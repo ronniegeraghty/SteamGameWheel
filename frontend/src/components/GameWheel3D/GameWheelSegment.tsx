@@ -15,6 +15,7 @@ type PropTypes = {
   color: string;
   addLineSegments: boolean;
   selected: boolean;
+  selectedScale: number;
   showSegmentNumber: boolean;
 };
 const GameWheelSegment = ({
@@ -23,6 +24,7 @@ const GameWheelSegment = ({
   color,
   addLineSegments,
   selected,
+  selectedScale,
   showSegmentNumber,
 }: PropTypes) => {
   const [newColor, setNewColor] = useState("#000000");
@@ -61,7 +63,9 @@ const GameWheelSegment = ({
         // geometry={cylinderGeometry}
         //material={cylinderMaterial}
         position={[0, 0, 0]}
-        scale={selected ? [1.01, 1.01, 1.01] : [1, 1, 1]}
+        scale={
+          selected ? [selectedScale, selectedScale, selectedScale] : [1, 1, 1]
+        }
         rotation={[0, (index * 2 * Math.PI) / numberOfSegments, 0]}
       >
         <cylinderBufferGeometry
@@ -84,7 +88,9 @@ const GameWheelSegment = ({
           geometry={wireFrameGeometry}
           material={wireFrameMaterial}
           position={[0, 0, 0]}
-          scale={selected ? [1.01, 1.01, 1.01] : [1, 1, 1]}
+          scale={
+            selected ? [selectedScale, selectedScale, selectedScale] : [1, 1, 1]
+          }
           rotation={[0, (index * 2 * Math.PI) / numberOfSegments, 0]}
         >
           <lineBasicMaterial
