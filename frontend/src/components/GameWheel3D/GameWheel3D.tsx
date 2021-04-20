@@ -18,11 +18,14 @@ const GameWheel3D = ({
   spin,
   setSpin,
 }: PropTypes) => {
+  //Component Constants
   const twoPI = 2 * Math.PI;
   const cirPerSeg = twoPI / segments.length;
+  //Ref to 3D GameWheel Object
+  const group = useRef<Group>();
+  //Component State
   const [state, setState] = useState("initialState");
   const [speed, setSpeed] = useState(0.05 * cirPerSeg);
-  const group = useRef<Group>();
   const [selected, setSelected] = useState<number | null>(null);
   const [selectedScale, setSelectedScale] = useState(1);
   const [distanceToCenter, setDistanceToCenter] = useState<number | null>(null);
@@ -31,7 +34,7 @@ const GameWheel3D = ({
       setState("spinning");
       // Randomly Set Starting point
       group.current.rotation.y = Math.random() * twoPI;
-      // Set Spin Starting Speed
+      // Reset Wheel State to start spin
       setSpeed(twoPI);
       setSelected(null);
       setSelectedScale(1);
@@ -67,24 +70,28 @@ const GameWheel3D = ({
         }
       } else if (state === "stopped") {
         //Rotate to center of selected segment
+        //Make sure Select is not null
         if (selected !== null) {
+          //Constants
           let centerOfSelectedSegment =
             twoPI - Math.PI / segments.length - selected * cirPerSeg;
           let normRotation = group.current.rotation.y % twoPI;
           let direction = centerOfSelectedSegment - normRotation > 0 ? 1 : -1;
           if (
-            normRotation !== centerOfSelectedSegment &&
             Math.abs(normRotation - centerOfSelectedSegment) <
-              cirPerSeg * 0.0101
+            cirPerSeg * 0.0101
           ) {
+            //Close to the center of selected Segment
             group.current.rotation.y = centerOfSelectedSegment;
           } else if (normRotation !== centerOfSelectedSegment) {
+            //Not close to the center of the selected Segment
             if (distanceToCenter === null) {
+              //Distance to center not set yet
               setDistanceToCenter(
                 Math.abs(normRotation - centerOfSelectedSegment)
               );
             } else {
-              // group.current.rotation.y += direction * delta * cirPerSeg * 0.5;
+              //Move towards center and start up-scale of segment
               group.current.rotation.y +=
                 direction * delta * (distanceToCenter / 0.5);
               setSelectedScale(
