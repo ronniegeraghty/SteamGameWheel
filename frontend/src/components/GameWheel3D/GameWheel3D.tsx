@@ -87,7 +87,9 @@ const GameWheel3D = ({
               // group.current.rotation.y += direction * delta * cirPerSeg * 0.5;
               group.current.rotation.y +=
                 direction * delta * (distanceToCenter / 0.5);
-              setSelectedScale(selectedScale + (delta * 0.1) / 0.5);
+              setSelectedScale(
+                selectedScale + (delta * 0.1 * (10 / segments.length)) / 0.5
+              );
             }
           }
         }
