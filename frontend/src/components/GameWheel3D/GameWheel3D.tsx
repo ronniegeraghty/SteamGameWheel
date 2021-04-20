@@ -121,7 +121,6 @@ const GameWheel3D = ({
           addLineSegments={true}
           selected={selected === index}
           selectedScale={selectedScale}
-          showSegmentNumber={true}
         />
       ))}
     </group>

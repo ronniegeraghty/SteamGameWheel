@@ -16,7 +16,6 @@ type PropTypes = {
   addLineSegments: boolean;
   selected: boolean;
   selectedScale: number;
-  showSegmentNumber: boolean;
 };
 const GameWheelSegment = ({
   numberOfSegments,
@@ -25,7 +24,6 @@ const GameWheelSegment = ({
   addLineSegments,
   selected,
   selectedScale,
-  showSegmentNumber,
 }: PropTypes) => {
   const [newColor, setNewColor] = useState("#000000");
   const [radius, setRadius] = useState(0);
