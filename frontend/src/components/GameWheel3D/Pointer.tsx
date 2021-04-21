@@ -16,7 +16,7 @@ const Pointer = ({ position }: PropTypes) => {
   return (
     <mesh
       ref={pointer}
-      position={[0, 2.2, 0.1]}
+      position={[0, 1.8, 0.1]}
       scale={[0.5, 0.5, 0.5]}
       rotation={[-Math.PI / 2, Math.PI, 0]}
     >
