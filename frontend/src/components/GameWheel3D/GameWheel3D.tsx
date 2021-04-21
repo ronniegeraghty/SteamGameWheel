@@ -107,7 +107,7 @@ const GameWheel3D = ({
   return (
     <group
       ref={group}
-      position={[0, 0.5, -segments.length]}
+      position={[0, 0, -segments.length]}
       rotation={[0, 0, 0]}
       scale={[1, 1, 1]}
     >
