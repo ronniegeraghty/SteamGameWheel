@@ -25,7 +25,7 @@ const GameWheel3D = ({
   const group = useRef<Group>();
   //Component State
   const [state, setState] = useState("initialState");
-  const [speed, setSpeed] = useState(0.05 * cirPerSeg);
+  const [speed, setSpeed] = useState(0.25);
   const [selected, setSelected] = useState<number | null>(null);
   const [selectedScale, setSelectedScale] = useState(1);
   const [distanceToCenter, setDistanceToCenter] = useState<number | null>(null);
@@ -46,12 +46,11 @@ const GameWheel3D = ({
     let segment = segments.length - Math.floor(normRotation / cirPerSeg) - 1;
     return segment;
   };
-
   useFrame((sceneState, delta) => {
     if (group.current) {
       if (state === "initialState") {
         // Inital slow spin while waiting for first spin
-        group.current.rotation.y += speed * cirPerSeg;
+        group.current.rotation.y += speed * delta * cirPerSeg;
         // If Spin Button Clicked
         if (spin) startSpin();
       } else if (state === "spinning") {
