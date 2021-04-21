@@ -48,12 +48,10 @@ const GameWheelSegment = ({
     opacity: 1,
     depthTest: false,
   });
-
   useEffect(() => {
     setRadius(numberOfSegments);
     setNewColor(getColor(index, numberOfSegments));
   }, [index, numberOfSegments]);
-
   return (
     <group>
       <mesh
