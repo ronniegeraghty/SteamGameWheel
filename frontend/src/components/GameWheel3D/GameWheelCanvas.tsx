@@ -8,7 +8,7 @@ const GameWheelCanvas = () => {
   const [segments, setSegments] = useState<string[]>([]);
   const [spin, setSpin] = useState(false);
   useEffect(() => {
-    var len = 50;
+    var len = 10;
     var temp = [];
     for (var i = 0; i < len; i++) {
       temp.push(" ");
