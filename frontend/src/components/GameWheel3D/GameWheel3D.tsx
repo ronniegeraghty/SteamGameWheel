@@ -26,6 +26,7 @@ const GameWheel3D = ({
   //Component State
   const [state, setState] = useState("initialState");
   const [speed, setSpeed] = useState(0.25);
+  const [spinDrag, setSpinDrag] = useState(0.1);
   const [selected, setSelected] = useState<number | null>(null);
   const [selectedScale, setSelectedScale] = useState(1);
   const [distanceToCenter, setDistanceToCenter] = useState<number | null>(null);
@@ -35,7 +36,7 @@ const GameWheel3D = ({
       // Randomly Set Starting point
       group.current.rotation.y = Math.random() * twoPI;
       // Reset Wheel State to start spin
-      setSpeed(twoPI);
+      setSpeed(twoPI / cirPerSeg);
       setSelected(null);
       setSelectedScale(1);
       setDistanceToCenter(null);
@@ -54,13 +55,14 @@ const GameWheel3D = ({
         // If Spin Button Clicked
         if (spin) startSpin();
       } else if (state === "spinning") {
-        //console.log(`Speed: ${speed}`);
+        console.log(`Speed: ${speed}`);
         // Spin
-        group.current.rotation.y += speed * cirPerSeg;
+        group.current.rotation.y += speed * delta;
         // Decrease speed
-        setSpeed(speed - speed / segments.length);
+        setSpeed(speed - delta * spinDrag);
+        setSpinDrag(speed / 2);
         //Stop spin if speed low
-        if (speed <= 0.001) {
+        if (speed <= 0.01 / cirPerSeg) {
           setState("stopped");
           setSpin(false);
           setRotation(group.current.rotation.y % twoPI);
