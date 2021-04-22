@@ -20,7 +20,7 @@ const GameWheel3D = ({
 }: PropTypes) => {
   //Component Constants
   const twoPI = 2 * Math.PI;
-  const cirPerSeg = twoPI / segments.length;
+  const degPerSeg = twoPI / segments.length;
   //Ref to 3D GameWheel Object
   const group = useRef<Group>();
   //Component State
@@ -36,7 +36,7 @@ const GameWheel3D = ({
       // Randomly Set Starting point
       group.current.rotation.y = Math.random() * twoPI;
       // Reset Wheel State to start spin
-      setSpeed(twoPI / cirPerSeg);
+      setSpeed(twoPI / degPerSeg);
       setSelected(null);
       setSelectedScale(1);
       setDistanceToCenter(null);
@@ -44,14 +44,14 @@ const GameWheel3D = ({
   };
   const segmentFromRotation = (rotation: number): number => {
     let normRotation = rotation % twoPI;
-    let segment = segments.length - Math.floor(normRotation / cirPerSeg) - 1;
+    let segment = segments.length - Math.floor(normRotation / degPerSeg) - 1;
     return segment;
   };
   useFrame((sceneState, delta) => {
     if (group.current) {
       if (state === "initialState") {
         // Inital slow spin while waiting for first spin
-        group.current.rotation.y += speed * delta * cirPerSeg;
+        group.current.rotation.y += speed * delta * degPerSeg;
         // If Spin Button Clicked
         if (spin) startSpin();
       } else if (state === "spinning") {
@@ -62,7 +62,7 @@ const GameWheel3D = ({
         setSpeed(speed - delta * spinDrag);
         setSpinDrag(speed / 2);
         //Stop spin if speed low
-        if (speed <= 0.01 / cirPerSeg) {
+        if (speed <= 0.01 / degPerSeg) {
           setState("stopped");
           setSpin(false);
           setRotation(group.current.rotation.y % twoPI);
@@ -75,12 +75,12 @@ const GameWheel3D = ({
         if (selected !== null) {
           //Constants
           let centerOfSelectedSegment =
-            twoPI - Math.PI / segments.length - selected * cirPerSeg;
+            twoPI - Math.PI / segments.length - selected * degPerSeg;
           let normRotation = group.current.rotation.y % twoPI;
           let direction = centerOfSelectedSegment - normRotation > 0 ? 1 : -1;
           if (
             Math.abs(normRotation - centerOfSelectedSegment) <
-            cirPerSeg * 0.0101
+            degPerSeg * 0.0101
           ) {
             //Close to the center of selected Segment
             group.current.rotation.y = centerOfSelectedSegment;
