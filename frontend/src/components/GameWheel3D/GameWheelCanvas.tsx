@@ -18,7 +18,9 @@ const GameWheelCanvas = () => {
   return (
     <div className="Canvas">
       <h5 style={{ color: "#FFFFFF" }}>Rotation: {rotation}</h5>
-      <button onClick={(event) => setSpin(!spin)}>Spin</button>
+      <button onClick={(event) => setSpin(!spin)}>
+        {spin ? "Stop" : "Spin"}
+      </button>
       <Canvas>
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
