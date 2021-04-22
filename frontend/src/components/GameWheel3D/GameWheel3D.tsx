@@ -66,7 +66,7 @@ const GameWheel3D = ({
           setSpeed(speed - delta * spinDrag);
           setSpinDrag(speed / 2);
           //Stop spin if speed low
-          if (speed <= 0.001) {
+          if (speed <= 0.001 || !spin) {
             setState("stopped");
             setSpin(false);
             setRotation(group.current.rotation.y % twoPI);
