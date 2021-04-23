@@ -58,16 +58,16 @@ const GameWheel3D = ({
         // If Spin Button Clicked
         if (spin) startSpin();
       } else if (state === "spinning") {
-        console.log(`Speed: ${speed}`);
+        //console.log(`Speed: ${speed}`);
         // Spin
         if (!spinDrag || !stopSpeed) {
           setStopSpeed(0.4255 * Math.pow(segments.length, -1.245));
-          if (stopSpeed) setSpinDrag(speed - stopSpeed);
+          if (stopSpeed) setSpinDrag((speed - stopSpeed) / 5);
         } else {
           group.current.rotation.y += speed * delta;
           // Decrease speed
-          setSpeed(speed - delta * spinDrag);
-          setSpinDrag(speed / 2);
+          setSpeed(speed - (delta * speed) / spinDrag);
+          //setSpinDrag(speed / 2);
           //Stop spin if speed low
           if (speed <= stopSpeed || !spin) {
             setState("stopped");
