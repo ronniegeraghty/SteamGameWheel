@@ -20,12 +20,14 @@ const GameWheel3D = ({
 }: PropTypes) => {
   //Component Constants
   const twoPI = 2 * Math.PI;
-  const cirPerSeg = twoPI / segments.length;
+  const degPerSeg = twoPI / segments.length;
   //Ref to 3D GameWheel Object
   const group = useRef<Group>();
   //Component State
   const [state, setState] = useState("initialState");
   const [speed, setSpeed] = useState(0.25);
+  const [spinDrag, setSpinDrag] = useState<number | null>(0.1);
+  const [stopSpeed, setStopSpeed] = useState<number | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
   const [selectedScale, setSelectedScale] = useState(1);
   const [distanceToCenter, setDistanceToCenter] = useState<number | null>(null);
@@ -36,6 +38,8 @@ const GameWheel3D = ({
       group.current.rotation.y = Math.random() * twoPI;
       // Reset Wheel State to start spin
       setSpeed(twoPI);
+      setSpinDrag(null);
+      setStopSpeed(null);
       setSelected(null);
       setSelectedScale(1);
       setDistanceToCenter(null);
@@ -43,29 +47,35 @@ const GameWheel3D = ({
   };
   const segmentFromRotation = (rotation: number): number => {
     let normRotation = rotation % twoPI;
-    let segment = segments.length - Math.floor(normRotation / cirPerSeg) - 1;
+    let segment = segments.length - Math.floor(normRotation / degPerSeg) - 1;
     return segment;
   };
   useFrame((sceneState, delta) => {
     if (group.current) {
       if (state === "initialState") {
         // Inital slow spin while waiting for first spin
-        group.current.rotation.y += speed * delta * cirPerSeg;
+        group.current.rotation.y += speed * delta * degPerSeg;
         // If Spin Button Clicked
         if (spin) startSpin();
       } else if (state === "spinning") {
         //console.log(`Speed: ${speed}`);
         // Spin
-        group.current.rotation.y += speed * cirPerSeg;
-        // Decrease speed
-        setSpeed(speed - speed / segments.length);
-        //Stop spin if speed low
-        if (speed <= 0.001 || !spin) {
-          setState("stopped");
-          setSpin(false);
-          setRotation(group.current.rotation.y % twoPI);
-          //Set selected segment
-          setSelected(segmentFromRotation(group.current.rotation.y));
+        if (!spinDrag || !stopSpeed) {
+          setStopSpeed(0.4255 * Math.pow(segments.length, -1.245));
+          if (stopSpeed) setSpinDrag((speed - stopSpeed) / 5);
+        } else {
+          group.current.rotation.y += speed * delta;
+          // Decrease speed
+          setSpeed(speed - (delta * speed) / spinDrag);
+          //setSpinDrag(speed / 2);
+          //Stop spin if speed low
+          if (speed <= stopSpeed || !spin) {
+            setState("stopped");
+            setSpin(false);
+            setRotation(group.current.rotation.y % twoPI);
+            //Set selected segment
+            setSelected(segmentFromRotation(group.current.rotation.y));
+          }
         }
       } else if (state === "stopped") {
         //Rotate to center of selected segment
@@ -73,12 +83,12 @@ const GameWheel3D = ({
         if (selected !== null) {
           //Constants
           let centerOfSelectedSegment =
-            twoPI - Math.PI / segments.length - selected * cirPerSeg;
+            twoPI - Math.PI / segments.length - selected * degPerSeg;
           let normRotation = group.current.rotation.y % twoPI;
           let direction = centerOfSelectedSegment - normRotation > 0 ? 1 : -1;
           if (
             Math.abs(normRotation - centerOfSelectedSegment) <
-            cirPerSeg * 0.0101
+            degPerSeg * 0.0101
           ) {
             //Close to the center of selected Segment
             group.current.rotation.y = centerOfSelectedSegment;
