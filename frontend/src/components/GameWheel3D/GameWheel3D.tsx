@@ -126,7 +126,6 @@ const GameWheel3D = ({
           key={index}
           numberOfSegments={segments.length}
           index={index}
-          color={color}
           addLineSegments={true}
           selected={selected === index}
           selectedScale={selectedScale}
