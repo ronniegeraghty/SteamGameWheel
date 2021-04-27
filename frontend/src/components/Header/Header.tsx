@@ -1,17 +1,13 @@
 import React from "react";
-import AppState from "../../interfaces/AppState";
 import Login from "../Login/Login";
 import UserIcon from "../UserIcon/UserIcon";
 import { useSpring, animated, config } from "react-spring";
 import "./Header.css";
 import { useHeight } from "../../hooks/UseHeight";
+import { useUser } from "../../hooks/UseUser";
 
-type propsType = {
-  appState: AppState;
-  setUserInfoCB: (submitedUserName: string) => void;
-  logoffCB: () => void;
-};
-const Header = ({ appState, setUserInfoCB, logoffCB }: propsType) => {
+const Header = () => {
+  const { userFound } = useUser();
   const slideInFromTopStyles = useSpring({
     config: {
       duration: 500,
@@ -19,8 +15,8 @@ const Header = ({ appState, setUserInfoCB, logoffCB }: propsType) => {
     },
     from: { marginTop: -50, opacity: 0 },
     to: {
-      marginTop: appState.userInfo ? 0 : -50,
-      opacity: appState.userInfo ? 1 : 0,
+      marginTop: userFound ? 0 : -50,
+      opacity: userFound ? 1 : 0,
     },
   });
   const [heightRef, height] = useHeight();
@@ -28,7 +24,7 @@ const Header = ({ appState, setUserInfoCB, logoffCB }: propsType) => {
     config: { ...config.stiff },
     from: { height: height },
     to: {
-      height: !appState.userInfo ? height + 50 : 0,
+      height: !userFound ? height + 50 : 0,
     },
   });
 
@@ -42,9 +38,7 @@ const Header = ({ appState, setUserInfoCB, logoffCB }: propsType) => {
           float: "right",
         }}
       >
-        {appState.userInfo && (
-          <UserIcon appState={appState} logoffCB={logoffCB} />
-        )}
+        {userFound && <UserIcon />}
       </animated.div>
       <animated.div
         style={{
@@ -54,11 +48,9 @@ const Header = ({ appState, setUserInfoCB, logoffCB }: propsType) => {
       >
         <div
           ref={heightRef}
-          style={{ display: !appState.userInfo ? "block" : "inline" }}
+          style={{ display: !userFound ? "block" : "inline" }}
         >
-          {!appState.userInfo && (
-            <Login appState={appState} setUserInfoCB={setUserInfoCB} />
-          )}
+          {!userFound && <Login />}
         </div>
       </animated.div>
     </div>

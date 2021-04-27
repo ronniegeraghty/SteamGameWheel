@@ -1,29 +1,25 @@
 import React, { useState } from "react";
-import AppState from "../../interfaces/AppState";
 import "./Login.css";
+import { useUser } from "../../hooks/UseUser";
 
-type propsType = {
-  appState: AppState;
-  setUserInfoCB: (submitedUserName: string) => void;
-};
-
-const Login = ({ appState, setUserInfoCB }: propsType) => {
+const Login = () => {
   const [userName, setUserName] = useState<string>("");
+  const { userFound, login } = useUser();
   const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setUserName(e.target.value);
   };
-  const login = (e: React.FormEvent<HTMLFormElement>) => {
+  const loginButton = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setUserInfoCB(userName);
+    login(userName);
   };
   return (
     <div className="Login">
       <form
         className={
-          appState.foundSteamUser ? "LoginForm" : "LoginFormUserNotFound"
+          !(userFound === false) ? "LoginForm" : "LoginFormUserNotFound"
         }
-        onSubmit={login}
+        onSubmit={loginButton}
       >
         <input
           className="UserNameInput"
@@ -37,7 +33,7 @@ const Login = ({ appState, setUserInfoCB }: propsType) => {
           Login
         </button>
       </form>
-      {!appState.foundSteamUser && (
+      {userFound === false && (
         <span className="NoUserFoundText">Steam User Not Found!</span>
       )}
     </div>

@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { animated, config, useSpring } from "react-spring";
-import AppState from "../../interfaces/AppState";
 import "./UserIcon.css";
 import UserIconMenu from "./UserIconMenu";
-type propsType = {
-  appState: AppState;
-  logoffCB: () => void;
-};
-const UserIcon = ({ appState, logoffCB }: propsType) => {
+import { useUser } from "../../hooks/UseUser";
+
+const UserIcon = () => {
+  const { user } = useUser();
   const [showUserIconMenu, setShowUserIconMenau] = useState<boolean>(false);
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     setShowUserIconMenau(!showUserIconMenu);
@@ -29,15 +27,15 @@ const UserIcon = ({ appState, logoffCB }: propsType) => {
   return (
     <div>
       <div className="UserIcon" onClick={handleClick}>
-        <div className="UserName">{appState.userInfo?.personaname}</div>
+        <div className="UserName">{user?.personaname}</div>
         <img
           className="SteamAvatar"
-          src={appState.userInfo?.avatarfull}
+          src={user?.avatarfull}
           alt="Steam Avatar"
         />
       </div>
       <animated.div style={slideInFromTopStyles}>
-        {showUserIconMenu && <UserIconMenu logoffCB={logoffCB} />}
+        {showUserIconMenu && <UserIconMenu />}
       </animated.div>
     </div>
   );
