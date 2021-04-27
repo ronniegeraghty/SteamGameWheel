@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppState from "../../interfaces/AppState";
 import "./Login.css";
 import { useUser } from "../../hooks/UseUser";
 
 const Login = () => {
   const [userName, setUserName] = useState<string>("");
-  const { user, login } = useUser();
-  const [userStatus] = useState(!(user && user.status === "No User Found"));
+  const { user, userFound, login } = useUser();
   const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setUserName(e.target.value);
@@ -18,7 +17,9 @@ const Login = () => {
   return (
     <div className="Login">
       <form
-        className={userStatus ? "LoginForm" : "LoginFormUserNotFound"}
+        className={
+          !(userFound === false) ? "LoginForm" : "LoginFormUserNotFound"
+        }
         onSubmit={loginButton}
       >
         <input
@@ -33,7 +34,7 @@ const Login = () => {
           Login
         </button>
       </form>
-      {!userStatus && (
+      {userFound === false && (
         <span className="NoUserFoundText">Steam User Not Found!</span>
       )}
     </div>

@@ -8,8 +8,7 @@ import { useHeight } from "../../hooks/UseHeight";
 import { useUser } from "../../hooks/UseUser";
 
 const Header = () => {
-  const { user } = useUser();
-  const [userStatus] = useState(!(user && user.status === "No User Found"));
+  const { userFound } = useUser();
   const slideInFromTopStyles = useSpring({
     config: {
       duration: 500,
@@ -17,8 +16,8 @@ const Header = () => {
     },
     from: { marginTop: -50, opacity: 0 },
     to: {
-      marginTop: user ? 0 : -50,
-      opacity: user ? 1 : 0,
+      marginTop: userFound ? 0 : -50,
+      opacity: userFound ? 1 : 0,
     },
   });
   const [heightRef, height] = useHeight();
@@ -26,7 +25,7 @@ const Header = () => {
     config: { ...config.stiff },
     from: { height: height },
     to: {
-      height: !user ? height + 50 : 0,
+      height: !userFound ? height + 50 : 0,
     },
   });
 
@@ -40,7 +39,7 @@ const Header = () => {
           float: "right",
         }}
       >
-        {user && <UserIcon />}
+        {userFound && <UserIcon />}
       </animated.div>
       <animated.div
         style={{
@@ -48,8 +47,11 @@ const Header = () => {
           overflow: "hidden",
         }}
       >
-        <div ref={heightRef} style={{ display: !user ? "block" : "inline" }}>
-          {userStatus && <Login />}
+        <div
+          ref={heightRef}
+          style={{ display: !userFound ? "block" : "inline" }}
+        >
+          {!userFound && <Login />}
         </div>
       </animated.div>
     </div>
