@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AppState from "../../interfaces/AppState";
 import Login from "../Login/Login";
 import UserIcon from "../UserIcon/UserIcon";
@@ -7,13 +7,9 @@ import "./Header.css";
 import { useHeight } from "../../hooks/UseHeight";
 import { useUser } from "../../hooks/UseUser";
 
-type propsType = {
-  appState: AppState;
-  setUserInfoCB: (submitedUserName: string) => void;
-  logoffCB: () => void;
-};
-const Header = ({ appState, setUserInfoCB, logoffCB }: propsType) => {
+const Header = () => {
   const { user } = useUser();
+  const [userStatus] = useState(!(user && user.status === "No User Found"));
   const slideInFromTopStyles = useSpring({
     config: {
       duration: 500,
@@ -44,7 +40,7 @@ const Header = ({ appState, setUserInfoCB, logoffCB }: propsType) => {
           float: "right",
         }}
       >
-        {user && <UserIcon appState={appState} />}
+        {user && <UserIcon />}
       </animated.div>
       <animated.div
         style={{
@@ -53,7 +49,7 @@ const Header = ({ appState, setUserInfoCB, logoffCB }: propsType) => {
         }}
       >
         <div ref={heightRef} style={{ display: !user ? "block" : "inline" }}>
-          {!user && <Login appState={appState} setUserInfoCB={setUserInfoCB} />}
+          {userStatus && <Login />}
         </div>
       </animated.div>
     </div>

@@ -3,12 +3,7 @@ import AppState from "../../interfaces/AppState";
 import "./Login.css";
 import { useUser } from "../../hooks/UseUser";
 
-type propsType = {
-  appState: AppState;
-  setUserInfoCB: (submitedUserName: string) => void;
-};
-
-const Login = ({ appState, setUserInfoCB }: propsType) => {
+const Login = () => {
   const [userName, setUserName] = useState<string>("");
   const { user, login } = useUser();
   const [userStatus] = useState(!(user && user.status === "No User Found"));

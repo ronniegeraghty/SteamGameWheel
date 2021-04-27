@@ -4,10 +4,8 @@ import AppState from "../../interfaces/AppState";
 import "./UserIcon.css";
 import UserIconMenu from "./UserIconMenu";
 import { useUser } from "../../hooks/UseUser";
-type propsType = {
-  appState: AppState;
-};
-const UserIcon = ({ appState }: propsType) => {
+
+const UserIcon = () => {
   const { user } = useUser();
   const [showUserIconMenu, setShowUserIconMenau] = useState<boolean>(false);
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {

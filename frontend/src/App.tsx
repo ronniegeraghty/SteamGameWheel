@@ -8,41 +8,18 @@ import { fetchUserInfo } from "./functions/FetchUserInfo";
 import { shuffle } from "./functions/ShuffleArray";
 import SteamGameWheel from "./components/SteamGameWheel/SteamGameWheel";
 import GameWheelCanvas from "./components/GameWheel3D/GameWheelCanvas";
-
-import { UserProvider } from "./hooks/UseUser";
+import { UserProvider, useUser } from "./hooks/UseUser";
 
 const App = () => {
-  const [appState, setAppState] = useState<AppState>(InitAppState);
-  const setUserInfo = (submitedUserName: string) => {
-    fetchUserInfo(submitedUserName)?.then((userInfo) => {
-      if (userInfo.status === "ok") {
-        setAppState({
-          ...appState,
-          userInfo: {
-            ...userInfo,
-            games: shuffle(userInfo.games),
-          },
-        });
-      } else if (userInfo.status === "No User Found") {
-        setAppState({ ...appState, foundSteamUser: false });
-      }
-    });
-  };
-  const logoff = () => {
-    setAppState(InitAppState);
-  };
+  const { user } = useUser();
   return (
     <div className="App">
       <UserProvider>
-        <Header
-          appState={appState}
-          setUserInfoCB={setUserInfo}
-          logoffCB={logoff}
-        />
+        <Header />
         {/* <Switch>
           <Route exact path="/" component={Blank} />
         </Switch> */}
-        {appState.userInfo && <SteamGameWheel appState={appState} />}
+        {/* {user && <SteamGameWheel />} */}
         <GameWheelCanvas />
         <Footer />
       </UserProvider>
