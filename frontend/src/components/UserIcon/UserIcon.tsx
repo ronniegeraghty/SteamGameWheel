@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { animated, config, useSpring } from "react-spring";
-import AppState from "../../interfaces/AppState";
 import "./UserIcon.css";
 import UserIconMenu from "./UserIconMenu";
 import { useUser } from "../../hooks/UseUser";

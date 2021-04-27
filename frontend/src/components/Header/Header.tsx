@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import AppState from "../../interfaces/AppState";
+import React from "react";
 import Login from "../Login/Login";
 import UserIcon from "../UserIcon/UserIcon";
 import { useSpring, animated, config } from "react-spring";

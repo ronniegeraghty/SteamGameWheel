@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import AppState from "../../interfaces/AppState";
+import React, { useState } from "react";
 import "./Login.css";
 import { useUser } from "../../hooks/UseUser";
 
 const Login = () => {
   const [userName, setUserName] = useState<string>("");
-  const { user, userFound, login } = useUser();
+  const { userFound, login } = useUser();
   const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setUserName(e.target.value);
