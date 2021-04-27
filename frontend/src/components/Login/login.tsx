@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import AppState from "../../interfaces/AppState";
 import "./Login.css";
+import { useUser } from "../../hooks/UseUser";
 
 type propsType = {
   appState: AppState;
@@ -9,21 +10,21 @@ type propsType = {
 
 const Login = ({ appState, setUserInfoCB }: propsType) => {
   const [userName, setUserName] = useState<string>("");
+  const { user, login } = useUser();
+  const [userStatus] = useState(!(user && user.status === "No User Found"));
   const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setUserName(e.target.value);
   };
-  const login = (e: React.FormEvent<HTMLFormElement>) => {
+  const loginButton = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setUserInfoCB(userName);
+    login(userName);
   };
   return (
     <div className="Login">
       <form
-        className={
-          appState.foundSteamUser ? "LoginForm" : "LoginFormUserNotFound"
-        }
-        onSubmit={login}
+        className={userStatus ? "LoginForm" : "LoginFormUserNotFound"}
+        onSubmit={loginButton}
       >
         <input
           className="UserNameInput"
@@ -37,7 +38,7 @@ const Login = ({ appState, setUserInfoCB }: propsType) => {
           Login
         </button>
       </form>
-      {!appState.foundSteamUser && (
+      {!userStatus && (
         <span className="NoUserFoundText">Steam User Not Found!</span>
       )}
     </div>

@@ -9,6 +9,8 @@ import { shuffle } from "./functions/ShuffleArray";
 import SteamGameWheel from "./components/SteamGameWheel/SteamGameWheel";
 import GameWheelCanvas from "./components/GameWheel3D/GameWheelCanvas";
 
+import { UserProvider } from "./hooks/UseUser";
+
 const App = () => {
   const [appState, setAppState] = useState<AppState>(InitAppState);
   const setUserInfo = (submitedUserName: string) => {
@@ -31,7 +33,7 @@ const App = () => {
   };
   return (
     <div className="App">
-      <React.Fragment>
+      <UserProvider>
         <Header
           appState={appState}
           setUserInfoCB={setUserInfo}
@@ -43,7 +45,7 @@ const App = () => {
         {appState.userInfo && <SteamGameWheel appState={appState} />}
         <GameWheelCanvas />
         <Footer />
-      </React.Fragment>
+      </UserProvider>
     </div>
   );
 };

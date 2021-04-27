@@ -5,6 +5,7 @@ import UserIcon from "../UserIcon/UserIcon";
 import { useSpring, animated, config } from "react-spring";
 import "./Header.css";
 import { useHeight } from "../../hooks/UseHeight";
+import { useUser } from "../../hooks/UseUser";
 
 type propsType = {
   appState: AppState;
@@ -12,6 +13,7 @@ type propsType = {
   logoffCB: () => void;
 };
 const Header = ({ appState, setUserInfoCB, logoffCB }: propsType) => {
+  const { user } = useUser();
   const slideInFromTopStyles = useSpring({
     config: {
       duration: 500,
@@ -19,8 +21,8 @@ const Header = ({ appState, setUserInfoCB, logoffCB }: propsType) => {
     },
     from: { marginTop: -50, opacity: 0 },
     to: {
-      marginTop: appState.userInfo ? 0 : -50,
-      opacity: appState.userInfo ? 1 : 0,
+      marginTop: user ? 0 : -50,
+      opacity: user ? 1 : 0,
     },
   });
   const [heightRef, height] = useHeight();
@@ -28,7 +30,7 @@ const Header = ({ appState, setUserInfoCB, logoffCB }: propsType) => {
     config: { ...config.stiff },
     from: { height: height },
     to: {
-      height: !appState.userInfo ? height + 50 : 0,
+      height: !user ? height + 50 : 0,
     },
   });
 
@@ -42,9 +44,7 @@ const Header = ({ appState, setUserInfoCB, logoffCB }: propsType) => {
           float: "right",
         }}
       >
-        {appState.userInfo && (
-          <UserIcon appState={appState} logoffCB={logoffCB} />
-        )}
+        {user && <UserIcon appState={appState} />}
       </animated.div>
       <animated.div
         style={{
@@ -52,13 +52,8 @@ const Header = ({ appState, setUserInfoCB, logoffCB }: propsType) => {
           overflow: "hidden",
         }}
       >
-        <div
-          ref={heightRef}
-          style={{ display: !appState.userInfo ? "block" : "inline" }}
-        >
-          {!appState.userInfo && (
-            <Login appState={appState} setUserInfoCB={setUserInfoCB} />
-          )}
+        <div ref={heightRef} style={{ display: !user ? "block" : "inline" }}>
+          {!user && <Login appState={appState} setUserInfoCB={setUserInfoCB} />}
         </div>
       </animated.div>
     </div>
