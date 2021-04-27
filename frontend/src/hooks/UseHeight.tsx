@@ -1,7 +1,4 @@
-import React, { createElement } from "react";
 import { useRef, useState, useLayoutEffect } from "react";
-
-import { useSpring, config, animated } from "react-spring";
 
 declare var ResizeObserver: any;
 
@@ -24,7 +21,7 @@ export function useHeight({ on = true /* no value means on */ } = {} as any) {
       ro.observe(ref.current, {});
     }
     return () => ro.disconnect();
-  }, [on, ref.current]);
+  }, [on, ro]);
 
   return [ref, height as any];
 }

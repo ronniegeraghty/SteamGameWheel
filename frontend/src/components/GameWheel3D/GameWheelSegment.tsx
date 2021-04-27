@@ -12,7 +12,6 @@ import getColor from "./getColor";
 type PropTypes = {
   numberOfSegments: number;
   index: number;
-  color: string;
   addLineSegments: boolean;
   selected: boolean;
   selectedScale: number;
@@ -20,7 +19,6 @@ type PropTypes = {
 const GameWheelSegment = ({
   numberOfSegments,
   index,
-  color,
   addLineSegments,
   selected,
   selectedScale,

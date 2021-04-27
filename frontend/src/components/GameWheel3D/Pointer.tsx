@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import { useFrame } from "@react-three/fiber";
 import { Mesh } from "three";
 
 type PropTypes = {
@@ -8,11 +7,6 @@ type PropTypes = {
 
 const Pointer = ({ position }: PropTypes) => {
   const pointer = useRef<Mesh>();
-  //   useFrame(() => {
-  //     if (pointer.current) {
-  //       pointer.current.rotation.x = pointer.current.rotation.y += 0.01;
-  //     }
-  //   });
   return (
     <mesh
       ref={pointer}
