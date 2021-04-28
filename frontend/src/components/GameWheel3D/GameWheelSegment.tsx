@@ -6,6 +6,8 @@ import {
   LineSegments,
   Mesh,
   MeshBasicMaterial,
+  TextureLoader,
+  Texture,
 } from "three";
 import getColor from "./getColor";
 
@@ -15,6 +17,7 @@ type PropTypes = {
   addLineSegments: boolean;
   selected: boolean;
   selectedScale: number;
+  img?: string | null;
 };
 const GameWheelSegment = ({
   numberOfSegments,
@@ -22,9 +25,11 @@ const GameWheelSegment = ({
   addLineSegments,
   selected,
   selectedScale,
+  img = null,
 }: PropTypes) => {
   const [newColor, setNewColor] = useState("#000000");
   const [radius, setRadius] = useState(0);
+  const [texture, setTexture] = useState<Texture | null>(null);
   const cylinderMesh = useRef<Mesh>();
   const cylinderGeometry = new CylinderBufferGeometry(
     radius,
@@ -48,8 +53,9 @@ const GameWheelSegment = ({
   });
   useEffect(() => {
     setRadius(numberOfSegments);
+    if (img) setTexture(new TextureLoader().load(img));
     setNewColor(getColor(index, numberOfSegments));
-  }, [index, numberOfSegments]);
+  }, [img, index, numberOfSegments]);
   return (
     <group>
       <mesh
@@ -74,7 +80,11 @@ const GameWheelSegment = ({
             (2 * Math.PI) / numberOfSegments,
           ]}
         />
-        <meshStandardMaterial color={newColor} />
+        {texture ? (
+          <meshStandardMaterial map={texture} />
+        ) : (
+          <meshStandardMaterial color={newColor} />
+        )}
       </mesh>
       {addLineSegments && (
         <lineSegments
