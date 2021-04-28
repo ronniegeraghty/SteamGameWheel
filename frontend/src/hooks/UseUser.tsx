@@ -27,8 +27,10 @@ const UserContextDefault: UserContextInterface = {
 };
 const UserContext = createContext<UserContextInterface>(UserContextDefault);
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<UserInfo | null>(null);
-  const [userFound, setUserFound] = useState<boolean | null>(null);
+  const [user, setUser] = useState<UserInfo | null>(UserContextDefault.user);
+  const [userFound, setUserFound] = useState<boolean | null>(
+    UserContextDefault.userFound
+  );
   const login = (submitedUserName: string) => {
     fetchUserInfo(submitedUserName)?.then((userInfo) => {
       if (userInfo.status === "ok") {
