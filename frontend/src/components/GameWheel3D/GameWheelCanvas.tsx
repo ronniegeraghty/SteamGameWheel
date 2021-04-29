@@ -1,38 +1,52 @@
 import React, { useEffect, useState } from "react";
+import { useAppState } from "../../hooks/useAppState";
+import { useUser } from "../../hooks/UseUser";
 import { Canvas } from "@react-three/fiber";
 import GameWheel3D from "./GameWheel3D";
 import Pointer from "./Pointer";
 import "./GameWheelCanvas.css";
 const GameWheelCanvas = () => {
+  const appStateContext = useAppState();
+  const userContext = useUser();
   const [rotation, setRotation] = useState(0);
-  const [segments, setSegments] = useState<string[]>([]);
   const [spin, setSpin] = useState(false);
+  const [segmentAmount, setSegmentAmnout] = useState(0);
   useEffect(() => {
-    var len = 50;
-    var temp = [];
-    for (var i = 0; i < len; i++) {
-      temp.push(" ");
+    if (appStateContext.debugModeEnable) {
+      setSegmentAmnout(appStateContext.testArr.length);
+    } else if (userContext.user) {
+      setSegmentAmnout(userContext.user.games.length);
     }
-    setSegments(temp);
-  }, []);
+  }, [
+    appStateContext.testArr.length,
+    appStateContext.debugModeEnable,
+    userContext.user,
+  ]);
   return (
     <div className="Canvas">
-      <h5 style={{ color: "#FFFFFF" }}>Rotation: {rotation}</h5>
-      <button onClick={(event) => setSpin(!spin)}>
-        {spin ? "Stop" : "Spin"}
-      </button>
-      <Canvas>
-        <ambientLight />
-        <pointLight position={[10, 10, 10]} />
-        <GameWheel3D
-          segments={segments}
-          rotation={rotation}
-          setRotation={setRotation}
-          spin={spin}
-          setSpin={setSpin}
-        />
-        <Pointer position={segments.length} />
-      </Canvas>
+      {appStateContext.debugModeEnable && (
+        <div className="debugTools">
+          <h5 style={{ color: "#FFFFFF" }}>Rotation: {rotation}</h5>
+          <button onClick={(event) => setSpin(!spin)}>
+            {spin ? "Stop" : "Spin"}
+          </button>
+        </div>
+      )}
+      {(userContext.userFound || appStateContext.debugModeEnable) && (
+        <Canvas>
+          <ambientLight />
+          <pointLight position={[10, 10, 10]} />
+          <GameWheel3D
+            setRotation={setRotation}
+            spin={spin}
+            setSpin={setSpin}
+            segmentAmount={segmentAmount}
+            appStateContext={appStateContext}
+            userContext={userContext}
+          />
+          <Pointer position={segmentAmount} />
+        </Canvas>
+      )}
     </div>
   );
 };

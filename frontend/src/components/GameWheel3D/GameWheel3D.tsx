@@ -2,27 +2,26 @@ import React, { useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Group } from "three";
 import GameWheelSegment from "./GameWheelSegment";
+import { AppStateContextType } from "../../hooks/useAppState";
+import { UserContextType } from "../../hooks/UseUser";
 
 type PropTypes = {
-  segments: string[];
-  rotation: number;
   setRotation: React.Dispatch<React.SetStateAction<number>>;
   spin: boolean;
   setSpin: React.Dispatch<React.SetStateAction<boolean>>;
+  segmentAmount: number;
+  appStateContext: AppStateContextType;
+  userContext: UserContextType;
 };
 
 const GameWheel3D = ({
-  segments,
-  rotation,
   setRotation,
   spin,
   setSpin,
+  segmentAmount,
+  appStateContext,
+  userContext,
 }: PropTypes) => {
-  //Component Constants
-  const twoPI = 2 * Math.PI;
-  const degPerSeg = twoPI / segments.length;
-  //Ref to 3D GameWheel Object
-  const group = useRef<Group>();
   //Component State
   const [state, setState] = useState("initialState");
   const [speed, setSpeed] = useState(0.25);
@@ -31,6 +30,43 @@ const GameWheel3D = ({
   const [selected, setSelected] = useState<number | null>(null);
   const [selectedScale, setSelectedScale] = useState(1);
   const [distanceToCenter, setDistanceToCenter] = useState<number | null>(null);
+  const { debugModeEnable, testArr } = appStateContext;
+  const { user, userFound } = userContext;
+  //Component Constants
+  const twoPI = 2 * Math.PI;
+  const degPerSeg = twoPI / segmentAmount;
+  //Ref to 3D GameWheel Object
+  const group = useRef<Group>();
+
+  const createSegments = () => {
+    if (debugModeEnable) {
+      return testArr.map((seg, index) => (
+        <GameWheelSegment
+          key={index}
+          numberOfSegments={segmentAmount}
+          index={index}
+          selected={selected === index}
+          selectedScale={selectedScale}
+          debugModeEnable={debugModeEnable}
+        />
+      ));
+    } else if (userFound && user) {
+      return user.games.map((game, index) => (
+        <GameWheelSegment
+          key={index}
+          numberOfSegments={user.games.length}
+          index={index}
+          selected={selected === index}
+          selectedScale={selectedScale}
+          appid={game.appid}
+          img={game.img_logo_url}
+        />
+      ));
+    } else {
+      console.log(`No User & Not in DebugMode`);
+    }
+  };
+
   const startSpin = () => {
     if (group.current) {
       setState("spinning");
@@ -47,7 +83,7 @@ const GameWheel3D = ({
   };
   const segmentFromRotation = (rotation: number): number => {
     let normRotation = rotation % twoPI;
-    let segment = segments.length - Math.floor(normRotation / degPerSeg) - 1;
+    let segment = segmentAmount - Math.floor(normRotation / degPerSeg) - 1;
     return segment;
   };
   useFrame((sceneState, delta) => {
@@ -61,7 +97,7 @@ const GameWheel3D = ({
         //console.log(`Speed: ${speed}`);
         // Spin
         if (!spinDrag || !stopSpeed) {
-          setStopSpeed(0.4255 * Math.pow(segments.length, -1.245));
+          setStopSpeed(0.4255 * Math.pow(segmentAmount, -1.245));
           if (stopSpeed) setSpinDrag((speed - stopSpeed) / 5);
         } else {
           group.current.rotation.y += speed * delta;
@@ -83,7 +119,7 @@ const GameWheel3D = ({
         if (selected !== null) {
           //Constants
           let centerOfSelectedSegment =
-            twoPI - Math.PI / segments.length - selected * degPerSeg;
+            twoPI - Math.PI / segmentAmount - selected * degPerSeg;
           let normRotation = group.current.rotation.y % twoPI;
           let direction = centerOfSelectedSegment - normRotation > 0 ? 1 : -1;
           if (
@@ -104,7 +140,7 @@ const GameWheel3D = ({
               group.current.rotation.y +=
                 direction * delta * (distanceToCenter / 0.5);
               setSelectedScale(
-                selectedScale + (delta * 0.1 * (10 / segments.length)) / 0.5
+                selectedScale + (delta * 0.1 * (10 / segmentAmount)) / 0.5
               );
             }
           }
@@ -117,20 +153,11 @@ const GameWheel3D = ({
   return (
     <group
       ref={group}
-      position={[0, 0, -segments.length]}
+      position={user ? [0, 0, -user.games.length] : [0, 0, -segmentAmount]}
       rotation={[0, 0, 0]}
       scale={[1, 1, 1]}
     >
-      {segments.map((color, index) => (
-        <GameWheelSegment
-          key={index}
-          numberOfSegments={segments.length}
-          index={index}
-          addLineSegments={true}
-          selected={selected === index}
-          selectedScale={selectedScale}
-        />
-      ))}
+      {createSegments()}
     </group>
   );
 };
