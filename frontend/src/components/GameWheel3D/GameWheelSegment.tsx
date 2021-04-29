@@ -5,7 +5,6 @@ import {
   LineBasicMaterial,
   LineSegments,
   Mesh,
-  MeshBasicMaterial,
   TextureLoader,
   Texture,
 } from "three";
@@ -14,20 +13,20 @@ import getColor from "./getColor";
 type PropTypes = {
   numberOfSegments: number;
   index: number;
-  addLineSegments: boolean;
   selected: boolean;
   selectedScale: number;
   appid?: number;
   img?: string;
+  debugModeEnable?: boolean;
 };
 const GameWheelSegment = ({
   numberOfSegments,
   index,
-  addLineSegments,
   selected,
   selectedScale,
   appid,
   img,
+  debugModeEnable,
 }: PropTypes) => {
   const [newColor, setNewColor] = useState("#000000");
   const [radius, setRadius] = useState(0);
@@ -43,7 +42,6 @@ const GameWheelSegment = ({
     0,
     (2 * Math.PI) / numberOfSegments
   );
-  const cylinderMaterial = new MeshBasicMaterial({ color: newColor });
   const wireFrameMesh = useRef<LineSegments>();
   const wireFrameGeometry = new EdgesGeometry(cylinderGeometry);
   const wireFrameMaterial = new LineBasicMaterial({
@@ -56,9 +54,20 @@ const GameWheelSegment = ({
   useEffect(() => {
     setRadius(numberOfSegments);
     if (appid && img)
-      setTexture(new TextureLoader().load(`/api/steam-images/${appid}/${img}`));
+      setTexture(
+        new TextureLoader().load(
+          `/api/steam-images/${appid}/${img}`,
+          undefined,
+          undefined,
+          function (error) {
+            console.error(
+              `Unable to load texture, appid: ${appid}, img_logo_url: ${img}`
+            );
+          }
+        )
+      );
     setNewColor(getColor(index, numberOfSegments));
-  }, [img, index, numberOfSegments]);
+  }, [appid, img, index, numberOfSegments]);
   return (
     <group>
       <mesh
@@ -89,7 +98,7 @@ const GameWheelSegment = ({
           <meshStandardMaterial color={newColor} />
         )}
       </mesh>
-      {addLineSegments && (
+      {debugModeEnable && (
         <lineSegments
           ref={wireFrameMesh}
           geometry={wireFrameGeometry}

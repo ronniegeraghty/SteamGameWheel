@@ -5,19 +5,26 @@ import React, {
   useState,
   useContext,
   useDebugValue,
+  useCallback,
 } from "react";
 
-interface AppStateContextInterface {
+export type AppStateContextType = {
   debugModeEnable: boolean;
   enableDebug: () => void;
-}
-const AppStateContextDefault: AppStateContextInterface = {
+  testArr: string[];
+  setTestArraySize: (size: number) => void;
+};
+const AppStateContextDefault: AppStateContextType = {
   debugModeEnable: false,
   enableDebug: () => {
     throw Error("AppStateContext not set!");
   },
+  testArr: [],
+  setTestArraySize: (size: number) => {
+    throw Error("AppStateContext not set!");
+  },
 };
-const AppStateContext = createContext<AppStateContextInterface>(
+const AppStateContext = createContext<AppStateContextType>(
   AppStateContextDefault
 );
 export const AppStateProvider = ({ children }: { children: ReactNode }) => {
@@ -25,9 +32,12 @@ export const AppStateProvider = ({ children }: { children: ReactNode }) => {
     AppStateContextDefault.debugModeEnable
   );
   const enableDebug = () => setDebugModeEnable(true);
-  const value = useMemo(() => ({ debugModeEnable, enableDebug }), [
-    debugModeEnable,
-  ]);
+  const [testArr, setTestArr] = useState(stringArray(50));
+  const setTestArraySize = (size: number) => setTestArr(stringArray(size));
+  const value = useMemo(
+    () => ({ debugModeEnable, enableDebug, testArr, setTestArraySize }),
+    [debugModeEnable, testArr]
+  );
   useDebugValue(debugModeEnable);
   return (
     <AppStateContext.Provider value={value}>
@@ -36,3 +46,11 @@ export const AppStateProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 export const useAppState = () => useContext(AppStateContext);
+
+function stringArray(size: number) {
+  let temp = [];
+  for (let i = 0; i < size; i++) {
+    temp.push("");
+  }
+  return temp;
+}

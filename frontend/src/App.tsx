@@ -1,25 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import { Switch, Route } from "react-router-dom";
 import "./App.css";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import GameWheelCanvas from "./components/GameWheel3D/GameWheelCanvas";
-import { AppStateProvider } from "./hooks/useAppState";
-import { UserProvider } from "./hooks/UseUser";
+import { useAppState } from "./hooks/useAppState";
 
 const App = () => {
+  const { enableDebug, setTestArraySize } = useAppState();
+  // useEffect(() => {
+  //   enableDebug();
+  //   setTestArraySize(10);
+  // }, []);
   return (
     <div className="App">
-      <AppStateProvider>
-        <UserProvider>
-          <Header />
-          {/* <Switch>
-          <Route exact path="/" component={Blank} />
+      <Header />
+      {/* <Switch>
+        <Route exact path="/" component={Blank} />
         </Switch> */}
-          <GameWheelCanvas />
-          <Footer />
-        </UserProvider>
-      </AppStateProvider>
+      <GameWheelCanvas />
+      <Footer />
     </div>
   );
 };
