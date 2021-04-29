@@ -17,7 +17,8 @@ type PropTypes = {
   addLineSegments: boolean;
   selected: boolean;
   selectedScale: number;
-  img?: string | null;
+  appid?: number;
+  img?: string;
 };
 const GameWheelSegment = ({
   numberOfSegments,
@@ -25,7 +26,8 @@ const GameWheelSegment = ({
   addLineSegments,
   selected,
   selectedScale,
-  img = null,
+  appid,
+  img,
 }: PropTypes) => {
   const [newColor, setNewColor] = useState("#000000");
   const [radius, setRadius] = useState(0);
@@ -53,7 +55,8 @@ const GameWheelSegment = ({
   });
   useEffect(() => {
     setRadius(numberOfSegments);
-    if (img) setTexture(new TextureLoader().load(img));
+    if (appid && img)
+      setTexture(new TextureLoader().load(`/api/steam-images/${appid}/${img}`));
     setNewColor(getColor(index, numberOfSegments));
   }, [img, index, numberOfSegments]);
   return (

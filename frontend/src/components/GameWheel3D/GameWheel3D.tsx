@@ -59,7 +59,8 @@ const GameWheel3D = ({
           addLineSegments={true}
           selected={selected === index}
           selectedScale={selectedScale}
-          img={`http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_logo_url}.jpg`}
+          appid={game.appid}
+          img={game.img_logo_url}
         />
       ));
     } else {
@@ -153,7 +154,7 @@ const GameWheel3D = ({
   return (
     <group
       ref={group}
-      position={[0, 0, -segments.length]}
+      position={user ? [0, 0, -user.games.length] : [0, 0, -segments.length]}
       rotation={[0, 0, 0]}
       scale={[1, 1, 1]}
     >
