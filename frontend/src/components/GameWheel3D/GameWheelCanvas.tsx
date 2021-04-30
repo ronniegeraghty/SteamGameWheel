@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useAppState } from "../../hooks/useAppState";
 import { useUser } from "../../hooks/UseUser";
+import { useWheel } from "../../hooks/useWheel";
 import { Canvas } from "@react-three/fiber";
 import GameWheel3D from "./GameWheel3D";
 import Pointer from "./Pointer";
@@ -9,7 +10,14 @@ const GameWheelCanvas = () => {
   const appStateContext = useAppState();
   const userContext = useUser();
   const [rotation, setRotation] = useState(0);
-  const [spin, setSpin] = useState(false);
+  const { spin, startSpin, stopSpin } = useWheel();
+  const setSpin = useCallback(
+    (value: boolean) => {
+      if (value) startSpin();
+      else stopSpin();
+    },
+    [startSpin, stopSpin]
+  );
   const [segmentAmount, setSegmentAmnout] = useState(0);
   useEffect(() => {
     if (appStateContext.debugModeEnable) {

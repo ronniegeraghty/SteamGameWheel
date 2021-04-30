@@ -1,5 +1,6 @@
 import React from "react";
 import Login from "../Login/Login";
+import SpinButton from "../SpinButton/SpinButton";
 import UserIcon from "../UserIcon/UserIcon";
 import { useSpring, animated, config } from "react-spring";
 import "./Header.css";
@@ -24,7 +25,7 @@ const Header = () => {
     config: { ...config.stiff },
     from: { height: height },
     to: {
-      height: !userFound ? height + 50 : 0,
+      height: !userFound ? height + 50 : height + 25,
     },
   });
 
@@ -48,9 +49,9 @@ const Header = () => {
       >
         <div
           ref={heightRef}
-          style={{ display: !userFound ? "block" : "inline" }}
+          style={{ display: !userFound ? "block" : "block" }}
         >
-          {!userFound && <Login />}
+          {userFound ? <SpinButton /> : <Login />}
         </div>
       </animated.div>
     </div>

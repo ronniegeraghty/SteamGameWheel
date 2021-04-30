@@ -1,0 +1,59 @@
+.SpinButton {
+  margin: 5% 0%;
+  text-align: center;
+}
+.LoginForm {
+  border: 2px solid rgba(15, 15, 15, 0.35);
+  border-radius: 50px;
+  display: inline-block;
+  padding: 5px 5px 5px 10px;
+}
+.LoginFormUserNotFound {
+  border: 2px solid rgba(255, 0, 0, 0.699);
+  border-radius: 50px;
+  display: inline-block;
+  padding: 5px 5px 5px 10px;
+}
+
+.UserNameInput {
+  border: none;
+  /* border-bottom: 1px solid rgba(15, 15, 15, 0.25); */
+  background: none;
+  color: white;
+}
+::placeholder {
+  color: rgba(15, 15, 15, 0.5);
+}
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: rgba(15, 15, 15, 0.5);
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: rgba(15, 15, 15, 0.5);
+}
+
+.LoginButton {
+  border: none;
+  border-radius: 50px;
+  background: none;
+  background: rgba(15, 15, 15, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: white;
+  outline: none;
+}
+.LoginButton:hover {
+  background: rgba(15, 15, 15, 0.5);
+}
+.LoginButton:focus {
+  background: rgba(15, 15, 15, 0.75);
+  outline: none;
+}
+.NoUserFoundText {
+  display: block;
+  color: rgba(255, 0, 0, 0.849);
+  font-size: small;
+  font-weight: bold;
+}
