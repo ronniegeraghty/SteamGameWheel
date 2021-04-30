@@ -25,7 +25,7 @@ const Header = () => {
     config: { ...config.stiff },
     from: { height: height },
     to: {
-      height: !userFound ? height + 50 : height + 25,
+      height: !userFound ? height : height,
     },
   });
 
@@ -44,7 +44,6 @@ const Header = () => {
       <animated.div
         style={{
           ...heightChangeStyles,
-          overflow: "hidden",
         }}
       >
         <div
