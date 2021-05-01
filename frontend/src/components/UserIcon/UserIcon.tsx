@@ -7,10 +7,7 @@ import { useUser } from "../../hooks/UseUser";
 const UserIcon = () => {
   const { user } = useUser();
   const [showUserIconMenu, setShowUserIconMenau] = useState<boolean>(false);
-  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    setShowUserIconMenau(!showUserIconMenu);
-  };
-  const slideInFromTopStyles = useSpring({
+  const slideInStyles = useSpring({
     config: {
       duration: 100,
       ...config.stiff,
@@ -24,6 +21,11 @@ const UserIcon = () => {
       opacity: showUserIconMenu ? 1 : 0,
     },
   });
+
+  const [animationStyle, setAnimationStyle] = useState(slideInStyles);
+  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    setShowUserIconMenau(!showUserIconMenu);
+  };
   return (
     <div>
       <div className="UserIcon" onClick={handleClick}>
@@ -34,7 +36,7 @@ const UserIcon = () => {
           alt="Steam Avatar"
         />
       </div>
-      <animated.div style={slideInFromTopStyles}>
+      <animated.div style={animationStyle}>
         {showUserIconMenu && <UserIconMenu />}
       </animated.div>
     </div>

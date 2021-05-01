@@ -1,0 +1,36 @@
+.SpinButtonContainer {
+  margin: 5% 0%;
+  text-align: center;
+}
+
+::placeholder {
+  color: rgba(15, 15, 15, 0.5);
+}
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: rgba(15, 15, 15, 0.5);
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: rgba(15, 15, 15, 0.5);
+}
+
+.SpinButton {
+  border: none;
+  border-radius: 50px;
+  background: none;
+  background: rgba(15, 15, 15, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: white;
+  outline: none;
+  font-size: xx-large;
+}
+.SpinButton:hover {
+  background: rgba(15, 15, 15, 0.5);
+}
+.SpinButton:focus {
+  background: rgba(15, 15, 15, 0.75);
+  outline: none;
+}

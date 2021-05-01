@@ -8,7 +8,7 @@ import { UserContextType } from "../../hooks/UseUser";
 type PropTypes = {
   setRotation: React.Dispatch<React.SetStateAction<number>>;
   spin: boolean;
-  setSpin: React.Dispatch<React.SetStateAction<boolean>>;
+  setSpin: (value: boolean) => void;
   segmentAmount: number;
   appStateContext: AppStateContextType;
   userContext: UserContextType;
