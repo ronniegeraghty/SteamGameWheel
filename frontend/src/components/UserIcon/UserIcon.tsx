@@ -21,20 +21,7 @@ const UserIcon = () => {
       opacity: showUserIconMenu ? 1 : 0,
     },
   });
-  const slideOutStyles = useSpring({
-    config: {
-      duration: 100,
-      ...config.stiff,
-    },
-    from: {
-      marginTop: 0,
-      opacity: 1,
-    },
-    to: {
-      marginTop: showUserIconMenu ? -50 : 0,
-      opacity: showUserIconMenu ? 0 : 1,
-    },
-  });
+
   const [animationStyle, setAnimationStyle] = useState(slideInStyles);
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     setShowUserIconMenau(!showUserIconMenu);
