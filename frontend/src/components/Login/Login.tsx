@@ -1,23 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./Login.css";
 import { useUser } from "../../hooks/UseUser";
 
 const Login = () => {
   const [userName, setUserName] = useState<string>("");
-  const { userFound, login } = useUser();
+  const [emptyUserName, setEmptyUserName] = useState(false);
+  const userNameInput = useRef<HTMLInputElement>(null);
+  const { userFound, login, logoff } = useUser();
   const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setUserName(e.target.value);
+    setEmptyUserName(false);
+    logoff();
   };
   const loginButton = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login(userName);
+    if (userName === "") {
+      setEmptyUserName(true);
+      if (userNameInput.current) userNameInput.current.focus();
+    } else login(userName);
   };
   return (
     <div className="Login">
       <form
         className={
-          !(userFound === false) ? "LoginForm" : "LoginFormUserNotFound"
+          !(userFound === false || emptyUserName)
+            ? "LoginForm"
+            : "LoginFormUserNotFound"
         }
         onSubmit={loginButton}
       >
@@ -27,14 +36,19 @@ const Login = () => {
           name="SteamUserName"
           value={userName}
           placeholder="Steam Username"
+          ref={userNameInput}
           onChange={handleUserNameChange}
         />
         <button className="LoginButton" type="submit">
           Login
         </button>
       </form>
-      {userFound === false && (
-        <span className="NoUserFoundText">Steam User Not Found!</span>
+      {(userFound === false || emptyUserName) && (
+        <span className="NoUserFoundText">
+          {emptyUserName
+            ? "You must provide a Steam UserName!"
+            : "Steam User Not Found!"}
+        </span>
       )}
     </div>
   );
