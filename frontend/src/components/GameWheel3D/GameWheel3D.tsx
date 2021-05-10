@@ -4,6 +4,7 @@ import { Group } from "three";
 import GameWheelSegment from "./GameWheelSegment";
 import { AppStateContextType } from "../../hooks/useAppState";
 import { UserContextType } from "../../hooks/UseUser";
+import { WheelContextType } from "../../hooks/useWheel";
 
 type PropTypes = {
   setRotation: React.Dispatch<React.SetStateAction<number>>;
@@ -12,6 +13,7 @@ type PropTypes = {
   segmentAmount: number;
   appStateContext: AppStateContextType;
   userContext: UserContextType;
+  wheelContext: WheelContextType;
 };
 
 const GameWheel3D = ({
@@ -21,6 +23,7 @@ const GameWheel3D = ({
   segmentAmount,
   appStateContext,
   userContext,
+  wheelContext,
 }: PropTypes) => {
   //Component State
   const [state, setState] = useState("initialState");
@@ -48,6 +51,7 @@ const GameWheel3D = ({
           selected={selected === index}
           selectedScale={selectedScale}
           debugModeEnable={debugModeEnable}
+          wheelContext={wheelContext}
         />
       ));
     } else if (userFound && user) {
@@ -58,8 +62,10 @@ const GameWheel3D = ({
           index={index}
           selected={selected === index}
           selectedScale={selectedScale}
+          wheelContext={wheelContext}
           appid={game.appid}
           img={game.img_logo_url}
+          gameName={game.name}
         />
       ));
     } else {

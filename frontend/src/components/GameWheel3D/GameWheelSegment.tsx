@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { WheelContextType } from "../../hooks/useWheel";
 import {
   CylinderBufferGeometry,
   EdgesGeometry,
@@ -15,8 +16,10 @@ type PropTypes = {
   index: number;
   selected: boolean;
   selectedScale: number;
+  wheelContext: WheelContextType;
   appid?: number;
   img?: string;
+  gameName?: string;
   debugModeEnable?: boolean;
 };
 const GameWheelSegment = ({
@@ -24,8 +27,10 @@ const GameWheelSegment = ({
   index,
   selected,
   selectedScale,
+  wheelContext,
   appid,
   img,
+  gameName,
   debugModeEnable,
 }: PropTypes) => {
   const [newColor, setNewColor] = useState("#000000");
@@ -66,8 +71,11 @@ const GameWheelSegment = ({
           }
         )
       );
-    setNewColor(getColor(index, numberOfSegments));
-  }, [appid, img, index, numberOfSegments]);
+    else setNewColor(getColor(index, numberOfSegments));
+    if (selected && gameName) {
+      wheelContext.setSelectedGameName(gameName);
+    }
+  }, [appid, gameName, img, index, numberOfSegments, selected, wheelContext]);
   return (
     <group>
       <mesh

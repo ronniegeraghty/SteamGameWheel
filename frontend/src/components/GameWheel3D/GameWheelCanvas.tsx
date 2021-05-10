@@ -6,11 +6,13 @@ import { Canvas } from "@react-three/fiber";
 import GameWheel3D from "./GameWheel3D";
 import Pointer from "./Pointer";
 import "./GameWheelCanvas.css";
+import GameTitle from "./GameTitle";
 const GameWheelCanvas = () => {
   const appStateContext = useAppState();
   const userContext = useUser();
   const [rotation, setRotation] = useState(0);
-  const { spin, startSpin, stopSpin } = useWheel();
+  const wheelContext = useWheel();
+  const { spin, startSpin, stopSpin } = wheelContext;
   const setSpin = useCallback(
     (value: boolean) => {
       if (value) startSpin();
@@ -51,8 +53,10 @@ const GameWheelCanvas = () => {
             segmentAmount={segmentAmount}
             appStateContext={appStateContext}
             userContext={userContext}
+            wheelContext={wheelContext}
           />
           <Pointer position={segmentAmount} />
+          <GameTitle wheelContext={wheelContext} />
         </Canvas>
       )}
     </div>
