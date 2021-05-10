@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, Suspense } from "react";
 import { useAppState } from "../../hooks/useAppState";
 import { useUser } from "../../hooks/UseUser";
 import { useWheel } from "../../hooks/useWheel";
@@ -7,6 +7,7 @@ import GameWheel3D from "./GameWheel3D";
 import Pointer from "./Pointer";
 import "./GameWheelCanvas.css";
 import GameTitle from "./GameTitle";
+import { OrbitControls } from "@react-three/drei";
 const GameWheelCanvas = () => {
   const appStateContext = useAppState();
   const userContext = useUser();
@@ -46,17 +47,21 @@ const GameWheelCanvas = () => {
         <Canvas>
           <ambientLight />
           <pointLight position={[10, 10, 10]} />
-          <GameWheel3D
-            setRotation={setRotation}
-            spin={spin}
-            setSpin={setSpin}
-            segmentAmount={segmentAmount}
-            appStateContext={appStateContext}
-            userContext={userContext}
-            wheelContext={wheelContext}
-          />
-          <Pointer position={segmentAmount} />
-          <GameTitle wheelContext={wheelContext} />
+          <Suspense fallback={null}>
+            {" "}
+            <GameWheel3D
+              setRotation={setRotation}
+              spin={spin}
+              setSpin={setSpin}
+              segmentAmount={segmentAmount}
+              appStateContext={appStateContext}
+              userContext={userContext}
+              wheelContext={wheelContext}
+            />
+            <Pointer position={segmentAmount} />
+            <GameTitle wheelContext={wheelContext} position={segmentAmount} />
+            <OrbitControls />
+          </Suspense>
         </Canvas>
       )}
     </div>

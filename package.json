@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/ronniegeraghty/SteamGameWheel#readme",
   "dependencies": {
+    "@react-three/drei": "^4.3.3",
     "@types/request": "^2.48.5",
     "bootstrap": "^4.5.3",
     "cookie-parser": "^1.4.5",
