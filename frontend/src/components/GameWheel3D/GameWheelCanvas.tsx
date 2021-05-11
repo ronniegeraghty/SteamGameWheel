@@ -57,7 +57,7 @@ const GameWheelCanvas = () => {
               userContext={userContext}
               wheelContext={wheelContext}
             />
-            <Pointer position={segmentAmount} />
+            <Pointer />
             <GameTitle wheelContext={wheelContext} position={segmentAmount} />
             <OrbitControls />
           </Suspense>
