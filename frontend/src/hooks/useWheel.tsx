@@ -1,4 +1,10 @@
-import React, { createContext, useState, ReactNode, useContext } from "react";
+import React, {
+  createContext,
+  useState,
+  ReactNode,
+  useContext,
+  useCallback,
+} from "react";
 
 export type WheelContextType = {
   spin: boolean;
@@ -23,10 +29,15 @@ const WheelContext = createContext<WheelContextType>(WheelContextDefault);
 export const WheelProvider = ({ children }: { children: ReactNode }) => {
   const [spin, setSpin] = useState(false);
   const [selectedGameName, setStateSelectedGameName] = useState<string>();
-  const startSpin = () => setSpin(true);
+  const startSpin = () => {
+    setSpin(true);
+    setStateSelectedGameName(undefined);
+  };
   const stopSpin = () => setSpin(false);
-  const setSelectedGameName = (gameName: string) =>
+  const setSelectedGameName = useCallback((gameName: string) => {
     setStateSelectedGameName(gameName);
+  }, []);
+
   return (
     <WheelContext.Provider
       value={{
