@@ -1,11 +1,7 @@
 import React, { useRef } from "react";
 import { Mesh } from "three";
 
-type PropTypes = {
-  position: number;
-};
-
-const Pointer = ({ position }: PropTypes) => {
+const Pointer = () => {
   const pointer = useRef<Mesh>();
   return (
     <mesh
