@@ -33,6 +33,7 @@ const GameWheelSegment = ({
   gameName,
   debugModeEnable,
 }: PropTypes) => {
+  const { spin, setSelectedGameName } = wheelContext;
   const [newColor, setNewColor] = useState("#000000");
   const [radius, setRadius] = useState(0);
   const [texture, setTexture] = useState<Texture | null>(null);
@@ -72,10 +73,19 @@ const GameWheelSegment = ({
         )
       );
     else setNewColor(getColor(index, numberOfSegments));
-    if (selected && gameName) {
-      wheelContext.setSelectedGameName(gameName);
+    if (selected && gameName && !spin) {
+      setSelectedGameName(gameName);
     }
-  }, [appid, gameName, img, index, numberOfSegments, selected, wheelContext]);
+  }, [
+    appid,
+    gameName,
+    img,
+    index,
+    numberOfSegments,
+    selected,
+    setSelectedGameName,
+    spin,
+  ]);
   return (
     <group>
       <mesh
