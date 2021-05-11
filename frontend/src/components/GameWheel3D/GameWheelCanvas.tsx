@@ -48,7 +48,6 @@ const GameWheelCanvas = () => {
           <ambientLight />
           <pointLight position={[10, 10, 10]} />
           <Suspense fallback={null}>
-            {" "}
             <GameWheel3D
               setRotation={setRotation}
               spin={spin}
