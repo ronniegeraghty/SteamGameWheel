@@ -13,7 +13,7 @@ const GameWheelCanvas = () => {
   const userContext = useUser();
   const [rotation, setRotation] = useState(0);
   const wheelContext = useWheel();
-  const { spin, startSpin, stopSpin } = wheelContext;
+  const { spin, startSpin, stopSpin, selectedGameName } = wheelContext;
   const setSpin = useCallback(
     (value: boolean) => {
       if (value) startSpin();
@@ -58,7 +58,7 @@ const GameWheelCanvas = () => {
               wheelContext={wheelContext}
             />
             <Pointer />
-            <GameTitle wheelContext={wheelContext} position={segmentAmount} />
+            {selectedGameName && <GameTitle wheelContext={wheelContext} />}
             <OrbitControls />
           </Suspense>
         </Canvas>
